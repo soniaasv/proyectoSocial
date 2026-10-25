@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. Chart and map colors were validated with the dataviz
+ * palette checker (ordinal ramps: monotone lightness, single hue, light end
+ * clears the surface) separately for light and dark surfaces.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  color-scheme: light;
+  --surface: #fcfcfb;
+  --plane: #f6f5f1;
+  --card: #ffffff;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #6f6e69;
+  --line: #e1e0d9;
+  --line-strong: #c3c2b7;
+  --brand: #c23a2c;
+  --brand-ink: #ffffff;
+  --brand-soft: #fbe9e5;
+  --focus: #2a78d6;
+  --good: #006300;
+  --good-soft: #e3f3e3;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Priority (Baja -> Urgente): one warm hue, light to dark. */
+  --prio-1: #f0a08a;
+  --prio-2: #e0674f;
+  --prio-3: #c23a2c;
+  --prio-4: #8a1c17;
+
+  /* Marginalization (Baja -> Alta): one blue hue, light to dark. */
+  --marg-1: #86b6ef;
+  --marg-2: #2a78d6;
+  --marg-3: #104281;
+
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: dark;
+    --surface: #1a1a19;
+    --plane: #121211;
+    --card: #222220;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --ink-3: #a3a29a;
+    --line: #2c2c2a;
+    --line-strong: #383835;
+    --brand: #e0674f;
+    --brand-ink: #0b0b0b;
+    --brand-soft: #3a1f1a;
+    --focus: #6da7ec;
+    --good: #0ca30c;
+    --good-soft: #142a14;
+
+    /* On dark, magnitude reads as brightness. */
+    --prio-1: #a8302a;
+    --prio-2: #d2513c;
+    --prio-3: #e8826b;
+    --prio-4: #f6b8a6;
+
+    --marg-1: #184f95;
+    --marg-2: #3987e5;
+    --marg-3: #9ec5f4;
+
+    --grid: #2c2c2a;
+    --axis: #383835;
   }
 }
 
+@theme inline {
+  --color-surface: var(--surface);
+  --color-plane: var(--plane);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-focus: var(--focus);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-prio-1: var(--prio-1);
+  --color-prio-2: var(--prio-2);
+  --color-prio-3: var(--prio-3);
+  --color-prio-4: var(--prio-4);
+  --color-marg-1: var(--marg-1);
+  --color-marg-2: var(--marg-2);
+  --color-marg-3: var(--marg-3);
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
