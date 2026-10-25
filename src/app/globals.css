@@ -32,6 +32,10 @@
   --marg-1: #86b6ef;
   --marg-2: #2a78d6;
   --marg-3: #104281;
+  /* Text set inside each marginalization fill. */
+  --marg-1-ink: #0b0b0b;
+  --marg-2-ink: #ffffff;
+  --marg-3-ink: #ffffff;
 
   --grid: #e1e0d9;
   --axis: #c3c2b7;
@@ -64,6 +68,9 @@
     --marg-1: #184f95;
     --marg-2: #3987e5;
     --marg-3: #9ec5f4;
+    --marg-1-ink: #ffffff;
+    --marg-2-ink: #ffffff;
+    --marg-3-ink: #0b0b0b;
 
     --grid: #2c2c2a;
     --axis: #383835;
