@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // API routes read the GeoJSON layers from disk; make sure Vercel bundles them.
+  outputFileTracingIncludes: {
+    "/api/**": ["./public/data/**"],
+  },
   turbopack: {
     rules: {
       "*.css": {

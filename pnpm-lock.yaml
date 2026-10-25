@@ -35,6 +35,9 @@ importers:
       react-dom:
         specifier: 19.3.0
         version: 19.3.0(react@19.3.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       zod:
         specifier: ^4.6.7
         version: 4.6.7
@@ -2143,6 +2146,9 @@ packages:
     resolution: {integrity: sha1-ObZGA33VDBT7RR5+TKxY7YuGP2k=, tarball: https://ms-feed-25.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/semver/-/semver-7.8.5.tgz}
     engines: {node: '>=10'}
     hasBin: true
+
+  server-only@0.0.1:
+    resolution: {integrity: sha1-DzZrtq+2GMN8klWjFFNdxBLNHJ4=, tarball: https://ms-feed-25.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/server-only/-/server-only-0.0.1.tgz}
 
   set-function-length@1.2.2:
     resolution: {integrity: sha1-qscjFBmOrtl1z3eyw7a4gGleVEk=, tarball: https://ms-feed-25.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/set-function-length/-/set-function-length-1.2.2.tgz}
@@ -4584,6 +4590,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.8.5: {}
+
+  server-only@0.0.1: {}
 
   set-function-length@1.2.2:
     dependencies:
