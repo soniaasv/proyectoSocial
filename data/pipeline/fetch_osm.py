@@ -23,6 +23,7 @@ OVERPASS_URLS = [
 RAW_FILE = RAW_DIR / "osm_navojoa.json"
 # Bounding box of Navojoa city's urban AGEBs, with a small margin (S, W, N, E).
 BBOX = (26.99, -109.51, 27.12, -109.39)
+URBAN_MARGIN_M = 30
 
 # OSM highway tag -> road class used by the app (ordered by importance).
 ROAD_CLASSES = {
@@ -95,9 +96,13 @@ def main():
                 "geometry": LineString(coords),
             })
 
-    streets_gdf = gpd.GeoDataFrame(streets, crs=WEB_CRS)
-    lengths = streets_gdf.to_crs(METRIC_CRS).length
-    streets_gdf = streets_gdf[lengths > 5]
+    # Keep only the urban area (AGEBs plus a 30 m margin): the bounding box also
+    # catches highways and neighboring villages outside the city.
+    urban = gpd.read_file(PUBLIC_DATA_DIR / "agebs.geojson").to_crs(METRIC_CRS).union_all().buffer(URBAN_MARGIN_M)
+    streets_gdf = gpd.GeoDataFrame(streets, crs=WEB_CRS).to_crs(METRIC_CRS)
+    streets_gdf["geometry"] = streets_gdf.geometry.intersection(urban)
+    streets_gdf = streets_gdf.explode(index_parts=False)
+    streets_gdf = streets_gdf[(streets_gdf.geom_type == "LineString") & (streets_gdf.length > 5)].to_crs(WEB_CRS)
 
     write_geojson(streets_gdf, PUBLIC_DATA_DIR / "calles.geojson")
     print("  calles por clase:", streets_gdf.clase.value_counts().to_dict())
