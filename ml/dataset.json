@@ -1,0 +1,10 @@
+{
+  "test": 253,
+  "test_boxes": 575,
+  "train": 1255,
+  "train_boxes": 2920,
+  "valid": 183,
+  "valid_boxes": 411,
+  "test_v0": 92,
+  "near_duplicates_removed": 808
+}
