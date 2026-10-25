@@ -1,12 +1,13 @@
-# Ficha del modelo: detector de baches v0
+# Ficha del modelo: detector de baches v1
 
 | | |
 |---|---|
 | **Modelo** | YOLO11n (Ultralytics), 2.6 M de parámetros, una clase: `bache` |
 | **Archivo** | `public/models/baches-yolo11n.onnx` (ONNX opset 17, 10.7 MB, entrada 640×640) |
 | **Ejecución** | En el navegador del usuario con `onnxruntime-web` (WASM). La foto no sale del dispositivo |
-| **Versión** | v0 · octubre 2026 · semilla 20261024 |
-| **Entrenamiento** | `ml/train.py` (reproducible con `uv run python train.py`) |
+| **Umbral** | 0.318: el que maximiza F1 en validación (`ml/calibrate.py`), leído por la app desde `src/data/modelo.json` |
+| **Versión** | v1 · octubre 2026 · semilla 20261024 · entrenado en Apple M4 (MPS), 50 épocas |
+| **Reproducir** | `uv run python prepare_data.py && uv run python train.py` |
 
 ## Uso previsto
 
@@ -16,38 +17,55 @@
 
 ## Datos
 
-- **Fuente:** *Potholes Detection v1*, de Roboflow Universe (project-ssayl), con licencia **CC BY 4.0**, a través del espejo de Hugging Face `Ryukijano/Pothole-detection-Yolov8`
-- **Tamaño:** 100 imágenes para entrenamiento, 100 para validación y 100 para prueba (el espejo publica 300 de las 13,767 originales)
-- **Origen de las fotos:** calles de varios países, con predominio de autopistas y vías amplias. **Ninguna es de Navojoa ni de México**
-- Se descartó Google Street View porque sus términos prohíben entrenar modelos con su contenido
+Cuatro conjuntos abiertos de Roboflow Universe, unidos en una sola clase:
 
-## Resultados (conjunto de prueba, 100 imágenes nunca vistas)
+| Fuente | Formato | Imágenes | Licencia |
+|---|---|---|---|
+| `Ryukijano/Pothole-detection-Yolov8` (Potholes Detection v1, project-ssayl) | YOLO | 300 | CC BY 4.0 |
+| `manot/pothole-segmentation` (road damage v3, abdulmohsen-fahad) | COCO | 819 | CC BY 4.0 |
+| `manot/pothole-segmentation2` (pothole-detection v2, gurgen-hovsepyan) | COCO | 665 | CC BY 4.0 |
+| `rupesh002/pothole-detection-dataset` (pothole v1) | YOLO | 715 | MIT |
 
-| Métrica | Valor |
-|---|---|
-| Precisión | 0.508 |
-| Recall | 0.331 |
-| mAP@0.5 | 0.350 |
-| mAP@0.5:0.95 | 0.144 |
+**Fuga de información evitada.** Estos conjuntos se copian entre sí. Las fotos se agruparon por *hash* perceptual (dHash, Hamming ≤ 6), comparando también su versión espejo, porque Roboflow aumenta con volteos. **808 de 2,499 (32%) eran casi duplicados.** Los grupos completos se asignaron a un solo conjunto:
 
-Tiempo de inferencia medido en una laptop (Apple M4, navegador headless, un hilo WASM): ~750 ms por foto. **Falta medirlo en un Android de gama baja.**
+| Conjunto | Fotos | Cajas |
+|---|---|---|
+| Entrenamiento | 1,255 | 2,920 |
+| Validación | 183 | 411 |
+| Prueba | 253 | 575 |
 
-**Cómo leerlo:** es un modelo débil. De cada 3 baches marcados, uno o dos son correctos, y encuentra 1 de cada 3 baches presentes. Como referencia, el mejor F1 del reto CRDDC2022 (47,420 imágenes) fue de 0.77. Con 100 imágenes de entrenamiento, este resultado es lo esperado.
+Las cajas repetidas bajo clases "padre" e "hija" en las exportaciones COCO se eliminaron (IoU > 0.9). **Ninguna foto es de Navojoa ni de México.** Google Street View se descartó porque sus términos prohíben entrenar modelos con su contenido.
+
+## Resultados
+
+Prueba: 253 fotos nunca vistas, evaluadas una sola vez.
+
+| Métrica | v0 (100 imágenes) | **v1 (1,255 imágenes)** |
+|---|---|---|
+| Precisión | 0.508 | **0.795** |
+| Recall | 0.331 | **0.560** |
+| mAP@0.5 | 0.350 | **0.683** |
+| mAP@0.5:0.95 | 0.144 | **0.364** |
+
+Comparación directa en las **mismas 92 fotos** del conjunto de prueba del v0: mAP@0.5 de 0.350 → **0.596**, recall de 0.331 → **0.564**.
+
+Inferencia en el navegador (Apple M4, headless, WASM con un hilo): ~750–970 ms por foto. **Falta medirla en un Android de gama baja.**
+
+**Cómo leerlo:** 4 de cada 5 baches que marca son correctos, y encuentra poco más de la mitad de los baches presentes. Es útil como ayuda, no como juez.
 
 ## Limitaciones y riesgos
 
-- **Cambio de dominio:** calles de Navojoa con terracería, topes, tapas de registro, tierra y luz intensa del desierto. Es probable que rinda peor que en la prueba
-- Confunde parches recientes y manchas oscuras con baches (falsos positivos)
-- Umbral de confianza usado en la app: 0.35 (NMS con IoU de 0.45)
+- **Cambio de dominio:** Navojoa tiene terracería, topes, tapas de registro, polvo y luz intensa. Se amplió la aumentación de brillo y saturación, pero es probable que rinda peor que en la prueba
+- Puede confundir parches recientes, charcos y manchas oscuras con baches
+- El recall moderado significa que a veces dirá "no encontré un bache" cuando sí lo hay. Por eso la app nunca bloquea el reporte
 
-## Plan para v1
+## Plan para v2
 
 1. Recolectar 500 o más fotos en Navojoa durante los recorridos de campo
-2. Etiquetarlas (Sonia), incluyendo negativos difíciles: topes, tapas y parches
-3. Preentrenar con RDD2022 y ajustar con las fotos locales; partir el conjunto **por zona geográfica**, para evitar fuga de información entre calles vecinas
-4. Reportar métricas por tipo de calle (pavimentada y sin pavimentar) y por nivel de marginación
-5. Cuantizar a FP16 o INT8 para bajar el tamaño a unos 3 a 5 MB
+2. Etiquetarlas (Sonia), incluyendo negativos difíciles: topes, tapas, parches y charcos
+3. Partir el conjunto **por zona geográfica** y reportar métricas por tipo de calle y por nivel de marginación
+4. Preentrenar con RDD2022 y cuantizar a FP16 o INT8 (3 a 5 MB)
 
 ## Licencia
 
-Los pesos derivan de pesos preentrenados de Ultralytics y se distribuyen bajo **AGPL-3.0**. El código del proyecto es MIT. Los datos de entrenamiento son CC BY 4.0, con atribución a Roboflow Universe (project-ssayl).
+Los pesos derivan de pesos preentrenados de Ultralytics y se distribuyen bajo **AGPL-3.0**. El código del proyecto es MIT. Datos de entrenamiento: CC BY 4.0 (Roboflow Universe, con atribución a sus autores) y MIT.

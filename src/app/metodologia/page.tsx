@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import modelo from "@/data/modelo.json";
 import { FACTOR_LABEL, NIVELES, PESOS, type Factor } from "@/lib/priority";
 import { SITE } from "@/lib/site";
 
@@ -123,6 +124,31 @@ export default function MetodologiaPage() {
           <strong className="text-ink">Sus resultados no describen a Navojoa.</strong>
         </p>
         <Tabla cabeceras={["Componente", "Supuesto"]} filas={SUPUESTOS} />
+      </Bloque>
+
+      <Bloque titulo="Inteligencia artificial en tu celular" id="ia">
+        <p className="text-ink-2">
+          Al tomar la foto, un detector YOLO11n de 2.6 millones de parámetros la analiza en tu navegador; la foto nunca
+          se sube. Se entrenó con {modelo.imagenesEntrenamiento.toLocaleString("es-MX")} fotos de cuatro conjuntos
+          abiertos, después de eliminar las fotos repetidas entre ellos para no inflar los resultados. El detector{" "}
+          <strong className="text-ink">solo ayuda</strong>: nunca bloquea un reporte ni cambia la prioridad.
+        </p>
+        <Tabla
+          cabeceras={["Métrica (fotos nunca vistas)", "Valor", "Qué significa"]}
+          filas={[
+            ["Precisión", `${Math.round(modelo.prueba.precision * 100)}%`, "De los baches que marca, cuántos sí lo son"],
+            ["Recall", `${Math.round(modelo.prueba.recall * 100)}%`, "De los baches que hay, cuántos encuentra"],
+            ["mAP@0.5", modelo.prueba.mAP50.toFixed(2), "Calidad general de detección (0 a 1)"],
+          ]}
+        />
+        <p className="text-sm text-ink-2">
+          Ninguna foto de entrenamiento es de Navojoa, así que en nuestras calles puede rendir menos. La siguiente versión
+          se entrenará con fotos locales de los recorridos.{" "}
+          <a href={`${SITE.repo}/blob/main/ml/MODEL_CARD.md`} className="underline underline-offset-2">
+            Ficha completa del modelo
+          </a>
+          .
+        </p>
       </Bloque>
 
       <Bloque titulo="Limitaciones">

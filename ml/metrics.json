@@ -1,11 +1,32 @@
 {
-  "dataset": "Ryukijano/Pothole-detection-Yolov8",
-  "split": "test",
-  "images": 100,
-  "precision": 0.508,
-  "recall": 0.331,
-  "mAP50": 0.35,
-  "mAP50_95": 0.144,
+  "version": "v1",
+  "device": "mps",
+  "seed": 20261024,
   "imgsz": 640,
-  "seed": 20261024
+  "dataset": {
+    "test": 253,
+    "test_boxes": 575,
+    "train": 1255,
+    "train_boxes": 2920,
+    "valid": 183,
+    "valid_boxes": 411,
+    "test_v0": 92,
+    "near_duplicates_removed": 808
+  },
+  "test": {
+    "precision": 0.795,
+    "recall": 0.56,
+    "mAP50": 0.683,
+    "mAP50_95": 0.364
+  },
+  "test_v0": {
+    "precision": 0.584,
+    "recall": 0.564,
+    "mAP50": 0.596,
+    "mAP50_95": 0.266
+  },
+  "umbral": {
+    "confianza": 0.318,
+    "f1_validacion": 0.659
+  }
 }

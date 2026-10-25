@@ -1,8 +1,10 @@
 "use client";
 
+import modelo from "@/data/modelo.json";
 import { decodificar, desletterbox, nms, type Caja } from "@/lib/yolo";
 
-export const MODELO_URL = "/models/baches-yolo11n.onnx";
+// Written by ml/calibrate.py: model file and the F1-optimal threshold on validation.
+export const MODELO_URL = modelo.archivo;
 const LADO = 640;
 
 type Sesion = import("onnxruntime-web").InferenceSession;
@@ -60,7 +62,7 @@ export async function detectarBaches(imagen: ImageBitmap): Promise<Deteccion> {
   const resultado = await s.run({ [s.inputNames[0]]: entrada });
   const salida = resultado[s.outputNames[0]];
   const candidatos = salida.dims[2];
-  const cajas = desletterbox(nms(decodificar(salida.data as Float32Array, candidatos)), escala, offsetX, offsetY);
+  const cajas = desletterbox(nms(decodificar(salida.data as Float32Array, candidatos, modelo.umbral)), escala, offsetX, offsetY);
   return {
     cajas,
     confianza: cajas.reduce((max, c) => Math.max(max, c.confianza), 0),
