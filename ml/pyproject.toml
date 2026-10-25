@@ -1,0 +1,11 @@
+[project]
+name = "calle-justa-ml"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "huggingface-hub>=2.3.0",
+    "onnx>=1.23.2",
+    "onnxruntime>=1.31.0",
+    "onnxslim>=0.1.98",
+    "ultralytics>=8.4.188",
+]
