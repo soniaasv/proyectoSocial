@@ -27,8 +27,15 @@
     "license": "Datos abiertos del Gobierno de México (libre uso con atribución)",
     "file": "imc_shp.zip"
   },
+  "denue": {
+    "description": "Directorio Estadístico Nacional de Unidades Económicas, Sonora: escuelas y servicios de salud",
+    "publisher": "INEGI",
+    "url": "https://www.inegi.org.mx/contenidos/masiva/denue/denue_26_csv.zip",
+    "license": "Términos de Libre Uso de la Información del INEGI",
+    "file": "denue26.zip"
+  },
   "openstreetmap": {
-    "description": "Calles, escuelas y servicios de salud de Navojoa vía Overpass API",
+    "description": "Red de calles de Navojoa vía Overpass API",
     "publisher": "Colaboradores de OpenStreetMap",
     "url": "https://overpass-api.de/api/interpreter",
     "license": "ODbL 1.0",
