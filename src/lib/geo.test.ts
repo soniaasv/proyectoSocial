@@ -16,6 +16,19 @@ const capas: Capas = {
       },
     ],
   },
+  agebs: {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        properties: { id: "2604200010001", poblacion: 3000, viviendas: 800, pctVehiculo: 55, grado: "Muy alto", indice: 0.8 },
+        geometry: {
+          type: "Polygon",
+          coordinates: [[[-109.45, 27.06], [-109.44, 27.06], [-109.44, 27.08], [-109.45, 27.08], [-109.45, 27.06]]],
+        },
+      },
+    ],
+  },
   calles: {
     type: "FeatureCollection",
     features: [
@@ -48,6 +61,11 @@ describe("crearResolverContexto", () => {
     expect(ctx.calle).toMatchObject({ nombre: "Blvd. Centenario", clase: "primaria" });
     expect(ctx.calle!.distanciaM).toBeLessThan(30);
     expect(ctx.colonia).toEqual({ id: "c1", nombre: "Centro", grado: "Alto", poblacion: 1200 });
+  });
+
+  it("finds the AGEB, which is the unit of analysis", () => {
+    expect(resolver(27.0702, -109.445).ageb).toEqual({ id: "2604200010001", grado: "Muy alto", poblacion: 3000 });
+    expect(resolver(27.0702, -109.435).ageb).toBeNull();
   });
 
   it("picks the closer of two parallel streets", () => {

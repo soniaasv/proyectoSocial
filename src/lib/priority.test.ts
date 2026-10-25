@@ -6,6 +6,7 @@ const ahora = new Date("2026-10-24T12:00:00Z");
 
 const contexto = (overrides: Partial<Contexto> = {}): Contexto => ({
   colonia: { id: "c1", nombre: "Centro", grado: "Medio", poblacion: 1000 },
+  ageb: { id: "a1", grado: "Medio", poblacion: 2000 },
   calle: { nombre: "Blvd. Centenario", clase: "primaria", superficie: "pavimentada", distanciaM: 3 },
   servicios: { escuelas: 0, salud: 0, masCercano: null },
   ...overrides,
@@ -28,7 +29,7 @@ describe("calcularPrioridad", () => {
     const p = calcularPrioridad(
       reporte({ severidad: 3, creadoEn: "2026-07-01T00:00:00Z" }),
       contexto({
-        colonia: { id: "c", nombre: "X", grado: "Muy alto", poblacion: 1 },
+        ageb: { id: "a", grado: "Muy alto", poblacion: 1 },
         servicios: { escuelas: 1, salud: 1, masCercano: null },
       }),
       ahora,
@@ -37,9 +38,9 @@ describe("calcularPrioridad", () => {
     expect(p.nivel).toBe("Urgente");
   });
 
-  it("ranks a pothole in a marginalized colonia above an identical one in a wealthy colonia", () => {
-    const pobre = calcularPrioridad(reporte(), contexto({ colonia: { id: "a", nombre: "A", grado: "Muy alto", poblacion: 1 } }), ahora);
-    const rica = calcularPrioridad(reporte(), contexto({ colonia: { id: "b", nombre: "B", grado: "Muy bajo", poblacion: 1 } }), ahora);
+  it("ranks a pothole in a marginalized zone above an identical one in a wealthy zone", () => {
+    const pobre = calcularPrioridad(reporte(), contexto({ ageb: { id: "a", grado: "Muy alto", poblacion: 1 } }), ahora);
+    const rica = calcularPrioridad(reporte(), contexto({ ageb: { id: "b", grado: "Muy bajo", poblacion: 1 } }), ahora);
     expect(pobre.puntaje - rica.puntaje).toBe(PESOS.rezago);
   });
 
@@ -64,14 +65,19 @@ describe("calcularPrioridad", () => {
       "Moderado",
       "Vialidad primaria (Blvd. Centenario)",
       "2 escuelas y 1 unidad de salud a menos de 300 m",
-      "Colonia con marginación media",
+      "Zona con marginación media",
       "Lleva 10 días esperando",
     ]);
   });
 
-  it("treats a missing street or colonia conservatively", () => {
-    const p = calcularPrioridad(reporte(), contexto({ calle: null, colonia: null }), ahora);
+  it("falls back to the colonia's grade when the AGEB has none", () => {
+    const p = calcularPrioridad(reporte(), contexto({ ageb: { id: "a", grado: null, poblacion: 5 } }), ahora);
+    expect(p.factores.find((f) => f.factor === "rezago")!.explicacion).toBe("Zona con marginación media");
+  });
+
+  it("treats a missing street or zone conservatively", () => {
+    const p = calcularPrioridad(reporte(), contexto({ calle: null, colonia: null, ageb: null }), ahora);
     expect(p.factores.find((f) => f.factor === "vialidad")!.explicacion).toBe("Calle sin clasificar");
-    expect(p.factores.find((f) => f.factor === "rezago")!.explicacion).toBe("Colonia sin dato de marginación");
+    expect(p.factores.find((f) => f.factor === "rezago")!.explicacion).toBe("Zona sin dato de marginación");
   });
 });

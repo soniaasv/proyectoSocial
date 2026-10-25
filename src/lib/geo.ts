@@ -7,6 +7,10 @@ export type ColoniasGeoJSON = FeatureCollection<
   Polygon | MultiPolygon,
   { id: string; nombre: string; cp: string; tipo: string; poblacion: number; grado: Grado; indice: number; sinInternet: number }
 >;
+export type AgebsGeoJSON = FeatureCollection<
+  Polygon | MultiPolygon,
+  { id: string; poblacion: number; viviendas: number | null; pctVehiculo: number | null; grado: Grado | null; indice: number | null }
+>;
 export type CallesGeoJSON = FeatureCollection<
   LineString,
   { osmId: number; nombre: string | null; clase: ClaseVial; superficie: string }
@@ -15,6 +19,7 @@ export type ServiciosGeoJSON = FeatureCollection<Point, { nombre: string; tipo: 
 
 export interface Capas {
   colonias: ColoniasGeoJSON;
+  agebs: AgebsGeoJSON;
   calles: CallesGeoJSON;
   servicios: ServiciosGeoJSON;
 }
@@ -44,7 +49,7 @@ function distanciaASegmento(p: XY, a: XY, b: XY): number {
 const llaveCelda = (x: number, y: number) => `${Math.floor(x / CELDA_M)}:${Math.floor(y / CELDA_M)}`;
 
 /** Builds a fast lookup from a location to its street, colonia and nearby services. */
-export function crearResolverContexto({ colonias, calles, servicios }: Capas) {
+export function crearResolverContexto({ colonias, agebs, calles, servicios }: Capas) {
   // Spatial grid: each cell lists the street segments that touch it.
   const segmentos: { a: XY; b: XY; calle: number }[] = [];
   const grid = new Map<string, number[]>();
@@ -93,6 +98,13 @@ export function crearResolverContexto({ colonias, calles, servicios }: Capas) {
     return { id, nombre, grado, poblacion };
   }
 
+  function agebDe(lng: number, lat: number): Contexto["ageb"] {
+    const feature = agebs.features.find((f) => booleanPointInPolygon([lng, lat], f));
+    if (!feature) return null;
+    const { id, grado, poblacion } = feature.properties;
+    return { id, grado, poblacion };
+  }
+
   function serviciosCercanos(p: XY): Contexto["servicios"] {
     let escuelas = 0;
     let salud = 0;
@@ -111,6 +123,6 @@ export function crearResolverContexto({ colonias, calles, servicios }: Capas) {
 
   return function resolver(lat: number, lng: number): Contexto {
     const p = proyectar(lng, lat);
-    return { colonia: coloniaDe(lng, lat), calle: calleMasCercana(p), servicios: serviciosCercanos(p) };
+    return { colonia: coloniaDe(lng, lat), ageb: agebDe(lng, lat), calle: calleMasCercana(p), servicios: serviciosCercanos(p) };
   };
 }

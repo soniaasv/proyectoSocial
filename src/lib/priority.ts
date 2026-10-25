@@ -1,4 +1,4 @@
-import { diasEntre, GRADO_ADJETIVO, SEVERIDAD_LABEL, type ClaseVial, type Contexto, type Grado, type Reporte } from "./domain";
+import { diasEntre, GRADO_ADJETIVO, gradoDe, SEVERIDAD_LABEL, type ClaseVial, type Contexto, type Grado, type Reporte } from "./domain";
 
 /**
  * Explainable priority index (0-100) for a pothole.
@@ -21,7 +21,7 @@ export const FACTOR_LABEL: Record<Factor, string> = {
   severidad: "Severidad",
   vialidad: "Importancia de la vialidad",
   servicios: "Escuelas y salud cerca",
-  rezago: "Rezago de la colonia",
+  rezago: "Rezago de la zona",
   espera: "Tiempo de espera",
 };
 
@@ -62,7 +62,7 @@ export function calcularPrioridad(
   ahora: Date,
 ): Prioridad {
   const clase = contexto.calle?.clase ?? "local";
-  const grado = contexto.colonia?.grado;
+  const grado = gradoDe(contexto);
   const { escuelas, salud } = contexto.servicios;
   const fin = reporte.estado === "reparado" && reporte.reparadoEn ? reporte.reparadoEn : ahora;
   const dias = diasEntre(reporte.creadoEn, fin);
@@ -87,7 +87,7 @@ export function calcularPrioridad(
     },
     rezago: {
       valor: grado ? REZAGO[grado] : REZAGO.Bajo,
-      explicacion: grado ? `Colonia con marginación ${GRADO_ADJETIVO[grado]}` : "Colonia sin dato de marginación",
+      explicacion: grado ? `Zona con marginación ${GRADO_ADJETIVO[grado]}` : "Zona sin dato de marginación",
     },
     espera: {
       valor: Math.min(1, dias / ESPERA_MAXIMA_DIAS),

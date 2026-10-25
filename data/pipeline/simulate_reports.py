@@ -49,11 +49,13 @@ SURVEY_DETECTION = 0.9
 def load_streets():
     streets = gpd.read_file(PUBLIC_DATA_DIR / "calles.geojson")
     streets = streets[streets.superficie != "sin pavimentar"].to_crs(METRIC_CRS)
-    colonias = gpd.read_file(PUBLIC_DATA_DIR / "colonias.geojson").to_crs(METRIC_CRS)
+    # AGEBs cover the whole city, unlike colonias; they are the unit of analysis.
+    agebs = gpd.read_file(PUBLIC_DATA_DIR / "agebs.geojson").to_crs(METRIC_CRS)
     midpoints = streets.copy()
     midpoints["geometry"] = streets.geometry.interpolate(0.5, normalized=True)
-    joined = gpd.sjoin(midpoints, colonias[["grado", "geometry"]], how="left", predicate="within")
+    joined = gpd.sjoin(midpoints, agebs[["grado", "geometry"]], how="left", predicate="within")
     joined = joined[~joined.index.duplicated()]
+    # AGEBs without a grade are nearly uninhabited (563 people in total).
     streets["grado"] = joined.grado.fillna("Bajo")
     streets["largo"] = streets.length
     return streets

@@ -1,5 +1,13 @@
-import { diasEntre, GRADOS, type Contexto, type Grado, type Reporte } from "./domain";
-import type { ColoniasGeoJSON } from "./geo";
+import {
+  diasEntre,
+  gradoDe,
+  nivelMarginacion,
+  NIVELES_MARGINACION,
+  type Contexto,
+  type NivelMarginacion,
+  type Reporte,
+} from "./domain";
+import type { AgebsGeoJSON } from "./geo";
 import type { Prioridad } from "./priority";
 
 export interface ReporteEnriquecido extends Reporte {
@@ -55,10 +63,15 @@ export function observacionesReparacion(reportes: Reporte[], ahora: Date) {
   }));
 }
 
-export interface IndicadoresGrado {
-  grado: Grado;
+export function nivelDe(reporte: ReporteEnriquecido): NivelMarginacion | null {
+  const grado = gradoDe(reporte.contexto);
+  return grado ? nivelMarginacion(grado) : null;
+}
+
+export interface IndicadoresNivel {
+  nivel: NivelMarginacion;
   poblacion: number;
-  colonias: number;
+  agebs: number;
   baches: number;
   reportesCiudadanos: number;
   /** Citizen reports (counting every supporter) per 1,000 inhabitants. */
@@ -70,22 +83,23 @@ export interface IndicadoresGrado {
   supervivencia: CurvaSupervivencia;
 }
 
-export function indicadoresPorGrado(
+/** Indicators by marginalization level, using AGEB population as denominator. */
+export function indicadoresPorNivel(
   reportes: ReporteEnriquecido[],
-  colonias: ColoniasGeoJSON,
+  agebs: AgebsGeoJSON,
   ahora: Date,
-): IndicadoresGrado[] {
-  return GRADOS.map((grado) => {
-    const coloniasGrado = colonias.features.filter((f) => f.properties.grado === grado);
-    const poblacion = coloniasGrado.reduce((sum, f) => sum + f.properties.poblacion, 0);
-    const delGrado = reportes.filter((r) => r.contexto.colonia?.grado === grado);
+): IndicadoresNivel[] {
+  return NIVELES_MARGINACION.map((nivel) => {
+    const agebsNivel = agebs.features.filter((f) => f.properties.grado && nivelMarginacion(f.properties.grado) === nivel);
+    const poblacion = agebsNivel.reduce((sum, f) => sum + f.properties.poblacion, 0);
+    const delGrado = reportes.filter((r) => nivelDe(r) === nivel);
     const ciudadanos = delGrado.filter((r) => r.fuente === "ciudadano");
     const quejas = ciudadanos.reduce((sum, r) => sum + r.apoyos, 0);
     const reparadosAlgunaVez = delGrado.filter((r) => r.reparadoEn !== null);
     return {
-      grado,
+      nivel,
       poblacion,
-      colonias: coloniasGrado.length,
+      agebs: agebsNivel.length,
       baches: delGrado.length,
       reportesCiudadanos: ciudadanos.length,
       quejasPorMil: poblacion > 0 ? (1000 * quejas) / poblacion : 0,
@@ -99,11 +113,9 @@ export function indicadoresPorGrado(
 
 const pct = (parte: number, total: number) => (total > 0 ? (100 * parte) / total : 0);
 
-export const ALTA_MARGINACION: readonly Grado[] = ["Alto", "Muy alto"];
-
 export interface ResultadoCriterio {
   seleccion: ReporteEnriquecido[];
-  porGrado: Record<Grado, number>;
+  porNivel: Record<NivelMarginacion, number>;
   pctAltaMarginacion: number;
   puntajePromedio: number;
 }
@@ -115,13 +127,15 @@ export interface Contrafactual {
 }
 
 function resumir(seleccion: ReporteEnriquecido[]): ResultadoCriterio {
-  const porGrado = Object.fromEntries(GRADOS.map((g) => [g, 0])) as Record<Grado, number>;
-  for (const r of seleccion) if (r.contexto.colonia) porGrado[r.contexto.colonia.grado]++;
-  const alta = seleccion.filter((r) => r.contexto.colonia && ALTA_MARGINACION.includes(r.contexto.colonia.grado)).length;
+  const porNivel = Object.fromEntries(NIVELES_MARGINACION.map((n) => [n, 0])) as Record<NivelMarginacion, number>;
+  for (const r of seleccion) {
+    const nivel = nivelDe(r);
+    if (nivel) porNivel[nivel]++;
+  }
   return {
     seleccion,
-    porGrado,
-    pctAltaMarginacion: pct(alta, seleccion.length),
+    porNivel,
+    pctAltaMarginacion: pct(porNivel.Alta, seleccion.length),
     puntajePromedio: seleccion.length ? seleccion.reduce((s, r) => s + r.prioridad.puntaje, 0) / seleccion.length : 0,
   };
 }

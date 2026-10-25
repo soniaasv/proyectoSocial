@@ -13,6 +13,19 @@ export const GRADO_ADJETIVO: Record<Grado, string> = {
   "Muy alto": "muy alta",
 };
 
+/**
+ * Grades grouped into three levels for analysis and communication. Navojoa
+ * city has few people in "Alto" and "Muy alto" AGEBs, so separate groups
+ * would rest on tiny samples.
+ */
+export const NIVELES_MARGINACION = ["Baja", "Media", "Alta"] as const;
+export type NivelMarginacion = (typeof NIVELES_MARGINACION)[number];
+
+export function nivelMarginacion(grado: Grado): NivelMarginacion {
+  if (grado === "Muy bajo" || grado === "Bajo") return "Baja";
+  return grado === "Medio" ? "Media" : "Alta";
+}
+
 /** Road hierarchy derived from OpenStreetMap, from busiest to quietest. */
 export const CLASES_VIALES = ["primaria", "secundaria", "terciaria", "local"] as const;
 export type ClaseVial = (typeof CLASES_VIALES)[number];
@@ -30,6 +43,11 @@ export type Fuente = "ciudadano" | "recorrido";
 
 export const SEVERIDAD_LABEL = { 1: "Leve", 2: "Moderado", 3: "Grave" } as const;
 export type Severidad = keyof typeof SEVERIDAD_LABEL;
+
+/** Marginalization used for analysis: the AGEB's grade, else the colonia's. */
+export function gradoDe(contexto: Contexto): Grado | null {
+  return contexto.ageb?.grado ?? contexto.colonia?.grado ?? null;
+}
 
 export interface Reporte {
   id: string;
@@ -51,7 +69,10 @@ export interface Reporte {
 }
 
 export interface Contexto {
+  /** Colonia name, as people know it (CONAPO 2020). Does not cover the whole city. */
   colonia: { id: string; nombre: string; grado: Grado; poblacion: number } | null;
+  /** Census tract (INEGI/CONAPO 2020): covers the whole city; the unit of analysis. */
+  ageb: { id: string; grado: Grado | null; poblacion: number } | null;
   calle: { nombre: string | null; clase: ClaseVial; superficie: string; distanciaM: number } | null;
   servicios: {
     escuelas: number;

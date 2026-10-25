@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Contexto, Grado } from "./domain";
-import { contrafactual, kaplanMeier, type ReporteEnriquecido } from "./equity";
+import { contrafactual, indicadoresPorNivel, kaplanMeier, type ReporteEnriquecido } from "./equity";
 
 describe("kaplanMeier", () => {
   it("matches a hand-computed example with censoring", () => {
@@ -48,7 +48,8 @@ describe("kaplanMeier", () => {
 
 function reporte(id: string, grado: Grado, apoyos: number, puntaje: number): ReporteEnriquecido {
   const contexto: Contexto = {
-    colonia: { id: grado, nombre: grado, grado, poblacion: 100 },
+    colonia: null,
+    ageb: { id: grado, grado, poblacion: 100 },
     calle: null,
     servicios: { escuelas: 0, salud: 0, masCercano: null },
   };
@@ -87,11 +88,37 @@ describe("contrafactual", () => {
     const r = contrafactual(reportes, 2);
     expect(r.porIndice.seleccion.map((x) => x.id)).toEqual(["c", "d"]);
     expect(r.porIndice.pctAltaMarginacion).toBe(100);
-    expect(r.porIndice.porGrado["Muy alto"]).toBe(1);
+    expect(r.porIndice.porNivel.Alta).toBe(2);
   });
 
   it("ignores potholes already repaired", () => {
     const reparado = { ...reporte("e", "Muy bajo", 9, 99), estado: "reparado" as const };
     expect(contrafactual([...reportes, reparado], 1).porQuejas.seleccion[0].id).toBe("a");
+  });
+});
+
+describe("indicadoresPorNivel", () => {
+  const agebs = {
+    type: "FeatureCollection" as const,
+    features: (
+      [
+        ["a", "Muy bajo", 6000],
+        ["b", "Bajo", 4000],
+        ["c", "Muy alto", 2000],
+        ["d", null, 50],
+      ] as const
+    ).map(([id, grado, poblacion]) => ({
+      type: "Feature" as const,
+      properties: { id, grado, poblacion, viviendas: null, pctVehiculo: null, indice: null },
+      geometry: { type: "Polygon" as const, coordinates: [] },
+    })),
+  };
+
+  it("groups grades into levels and normalizes complaints by population", () => {
+    const reportes = [reporte("1", "Muy bajo", 3, 40), reporte("2", "Bajo", 2, 40), reporte("3", "Muy alto", 1, 40), reporte("4", "Alto", 0, 40)];
+    const [baja, media, alta] = indicadoresPorNivel(reportes, agebs, new Date("2026-10-24T00:00:00Z"));
+    expect(baja).toMatchObject({ nivel: "Baja", poblacion: 10000, agebs: 2, baches: 2, quejasPorMil: 0.5 });
+    expect(media).toMatchObject({ nivel: "Media", poblacion: 0, baches: 0, quejasPorMil: 0 });
+    expect(alta).toMatchObject({ nivel: "Alta", poblacion: 2000, baches: 2, quejasPorMil: 0.5, pctSoloRecorrido: 50 });
   });
 });
