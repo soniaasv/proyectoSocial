@@ -175,7 +175,7 @@ function Interruptor({ checked, onChange, label }: { checked: boolean; onChange:
 
 function Leyenda({ marginacion, reparados, servicios }: { marginacion: boolean; reparados: boolean; servicios: boolean }) {
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 space-y-2 rounded-xl border border-black/10 bg-white/95 p-3 text-xs text-[#0b0b0b] shadow-sm">
+    <div className="pointer-events-none absolute left-3 top-3 max-w-[calc(100%-4.5rem)] space-y-2 rounded-xl border border-black/10 bg-white/95 p-3 text-xs text-[#0b0b0b] shadow-sm md:bottom-3 md:top-auto">
       <p className="font-medium">Prioridad</p>
       <ul className="flex flex-wrap gap-x-3 gap-y-1">
         {NIVELES.toReversed().map(({ nombre }) => (
