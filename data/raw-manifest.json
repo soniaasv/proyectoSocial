@@ -1,0 +1,18 @@
+{
+  "censo_ageb_2020": {
+    "file": "censo26.zip",
+    "sha256": "26609dc057667c822f8640daab4395c03244031955082258c6503249d768b9bd"
+  },
+  "marco_geoestadistico_2020": {
+    "file": "mg26.zip",
+    "sha256": "45446c0c8d97582fd5b69e577cba998d75d518e1cf00f627a0afc8fc0cdf5f29"
+  },
+  "imu_2020": {
+    "file": "imu.zip",
+    "sha256": "17fdd6a31a57d4deb5519fe1e7bd58e7e52d115cf0474d6b59fbf9a52cde26b9"
+  },
+  "imc_2020_shp": {
+    "file": "imc_shp.zip",
+    "sha256": "69d73b5bb0127df6c81701684eb28cd6bd666d9319a1ffb45da76446ae278426"
+  }
+}

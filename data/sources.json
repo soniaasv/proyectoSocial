@@ -1,0 +1,37 @@
+{
+  "censo_ageb_2020": {
+    "description": "Censo de Población y Vivienda 2020, resultados por AGEB y manzana urbana, Sonora",
+    "publisher": "INEGI",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/ageb_manzana/ageb_mza_urbana_26_cpv2020_csv.zip",
+    "license": "Términos de Libre Uso de la Información del INEGI",
+    "file": "censo26.zip"
+  },
+  "marco_geoestadistico_2020": {
+    "description": "Marco Geoestadístico 2020 (Censo), Sonora: polígonos de AGEB urbana",
+    "publisher": "INEGI",
+    "url": "https://www.inegi.org.mx/contenidos/productos/prod_serv/contenidos/espanol/bvinegi/productos/geografia/marcogeo/889463807469/26_sonora.zip",
+    "license": "Términos de Libre Uso de la Información del INEGI",
+    "file": "mg26.zip"
+  },
+  "imu_2020": {
+    "description": "Índice de marginación urbana 2020 por AGEB",
+    "publisher": "CONAPO",
+    "url": "https://conapo.segob.gob.mx/work/models/CONAPO/Datos_Abiertos/Marginacion/IMU_2020.zip",
+    "license": "Datos abiertos del Gobierno de México (libre uso con atribución)",
+    "file": "imu.zip"
+  },
+  "imc_2020_shp": {
+    "description": "Índice de marginación urbana 2020 por colonia, cartografía",
+    "publisher": "CONAPO",
+    "url": "https://conapo.segob.gob.mx/work/models/CONAPO/Datos_Abiertos/Colonia/imc2020_shp.zip",
+    "license": "Datos abiertos del Gobierno de México (libre uso con atribución)",
+    "file": "imc_shp.zip"
+  },
+  "openstreetmap": {
+    "description": "Calles, escuelas y servicios de salud de Navojoa vía Overpass API",
+    "publisher": "Colaboradores de OpenStreetMap",
+    "url": "https://overpass-api.de/api/interpreter",
+    "license": "ODbL 1.0",
+    "file": "osm_navojoa.json"
+  }
+}
