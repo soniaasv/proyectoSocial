@@ -14,5 +14,9 @@
   "imc_2020_shp": {
     "file": "imc_shp.zip",
     "sha256": "69d73b5bb0127df6c81701684eb28cd6bd666d9319a1ffb45da76446ae278426"
+  },
+  "denue": {
+    "file": "denue26.zip",
+    "sha256": "332bbcd4cc79a5806cbde9e9e4be0522648171d48f04d4e13b1500dce5192fdc"
   }
 }

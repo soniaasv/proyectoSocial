@@ -33,9 +33,13 @@ def normalize_grade(value):
     return value if value in GRADES else None
 
 
+ACRONYMS = {"Itson": "ITSON", "Ctm": "CTM", "Fovissste": "FOVISSSTE", "Cnop": "CNOP"}
+
+
 def clean_name(name):
-    """CONAPO title-cases names, which breaks roman numerals ("Ii" -> "II")."""
-    return re.sub(r"\b([IVX][ivx]+)\b", lambda m: m.group(1).upper(), name.strip())
+    """CONAPO title-cases names, which breaks roman numerals and acronyms."""
+    name = re.sub(r"\b([IVX][ivx]+)\b", lambda m: m.group(1).upper(), name.strip())
+    return re.sub(r"\b\w+\b", lambda m: ACRONYMS.get(m.group(0), m.group(0)), name)
 
 
 def to_web(gdf):
