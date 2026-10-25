@@ -6,6 +6,7 @@ data/raw so the processed layers can be rebuilt offline.
 """
 
 import json
+import time
 
 import geopandas as gpd
 import requests
@@ -14,7 +15,11 @@ from shapely.geometry import LineString
 from .build_territory import write_geojson
 from .config import METRIC_CRS, PUBLIC_DATA_DIR, RAW_DIR, WEB_CRS
 
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+# Main instance first, then a public mirror; the main one resets connections under load.
+OVERPASS_URLS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
+]
 RAW_FILE = RAW_DIR / "osm_navojoa.json"
 # Bounding box of Navojoa city's urban AGEBs, with a small margin (S, W, N, E).
 BBOX = (26.99, -109.51, 27.12, -109.39)
@@ -47,11 +52,21 @@ def build_query():
 def fetch():
     if RAW_FILE.exists():
         return json.loads(RAW_FILE.read_text())
-    resp = requests.post(OVERPASS_URL, data={"data": build_query()}, timeout=180,
-                         headers={"User-Agent": "calle-justa-data/0.1"})
-    resp.raise_for_status()
-    RAW_FILE.write_text(resp.text)
-    return resp.json()
+    last_error = None
+    for attempt, url in enumerate(OVERPASS_URLS * 2):
+        try:
+            resp = requests.post(url, data={"data": build_query()}, timeout=180,
+                                 headers={"User-Agent": "calle-justa-data/0.1"})
+            resp.raise_for_status()
+            data = resp.json()
+        except (requests.RequestException, ValueError) as error:
+            last_error = error
+            print(f"  Overpass attempt {attempt + 1} failed ({url}): {error}")
+            time.sleep(5 * (attempt + 1))
+            continue
+        RAW_FILE.write_text(resp.text)
+        return data
+    raise RuntimeError("Overpass is unavailable") from last_error
 
 
 def surface_of(tags):
