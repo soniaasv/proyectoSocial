@@ -62,6 +62,8 @@ export interface Reporte {
   reparadoEn: string | null;
   /** The pothole was repaired and opened again (the patch did not last). */
   reabierto: boolean;
+  /** Found by a field survey of a randomly sampled street (whether or not citizens reported it). */
+  verificado: boolean;
   simulado: boolean;
   descripcion?: string | null;
   /** Confidence of the on-device detector, when the photo was checked. */

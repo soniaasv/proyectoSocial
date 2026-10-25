@@ -12,8 +12,10 @@ Generative model (assumptions documented in docs/metodologia.md):
 2. Citizens report a pothole with a probability that falls as marginalization
    rises, following the reporting gap documented for complaint systems
    (Kontokosta et al. 2017; Sjoberg et al. 2017).
-3. Field surveys ("recorridos") on a few routes find potholes regardless of
-   whether anyone complained, which is how the bias can be measured.
+3. Field surveys ("recorridos") on a random sample of streets find potholes
+   regardless of whether anyone complained. Among surveyed potholes, the share
+   that citizens had reported estimates each zone's reporting rate without
+   depending on population or on how much damage there is.
 4. The repair policy is complaint-driven, as the municipality describes it:
    more complaints and busier streets get repaired sooner.
 """
@@ -104,6 +106,7 @@ def simulate(potholes, streets, rng):
             "geometry": p.geometry,
             "severidad": severity,
             "fuente": "ciudadano" if reported else "recorrido",
+            "verificado": bool(surveyed),
             "apoyos": supports,
             "creadoHaceDias": age,
             "estado": status,
@@ -133,6 +136,7 @@ def main():
             "estado": r.estado,
             "reparadoHaceDias": None if r.reparadoHaceDias is None or np.isnan(r.reparadoHaceDias) else int(r.reparadoHaceDias),
             "reabierto": bool(r.reabierto),
+            "verificado": bool(r.verificado),
             "simulado": True,
         })
     APP_DATA_DIR.mkdir(parents=True, exist_ok=True)

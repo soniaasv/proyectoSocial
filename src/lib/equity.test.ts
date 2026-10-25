@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Contexto, Grado } from "./domain";
-import { contrafactual, indicadoresPorNivel, kaplanMeier, type ReporteEnriquecido } from "./equity";
+import { contrafactual, curvaPorDia, indicadoresPorNivel, kaplanMeier, type ReporteEnriquecido } from "./equity";
 
 describe("kaplanMeier", () => {
   it("matches a hand-computed example with censoring", () => {
@@ -21,6 +21,14 @@ describe("kaplanMeier", () => {
       { dia: 8, pendiente: 0 },
     ]);
     expect(curva.mediana).toBe(4);
+  });
+
+  it("evaluates the step curve day by day", () => {
+    const curva = kaplanMeier([
+      { dias: 2, reparado: true },
+      { dias: 4, reparado: true },
+    ]);
+    expect(curvaPorDia(curva, 6)).toEqual([1, 1, 0.5, 0.5, 0, 0]);
   });
 
   it("has no median when fewer than half get repaired", () => {
@@ -64,6 +72,7 @@ function reporte(id: string, grado: Grado, apoyos: number, puntaje: number): Rep
     estado: "pendiente",
     reparadoEn: null,
     reabierto: false,
+    verificado: apoyos === 0,
     simulado: true,
     contexto,
     prioridad: { puntaje, nivel: "Media", factores: [] },
@@ -120,5 +129,14 @@ describe("indicadoresPorNivel", () => {
     expect(baja).toMatchObject({ nivel: "Baja", poblacion: 10000, agebs: 2, baches: 2, quejasPorMil: 0.5 });
     expect(media).toMatchObject({ nivel: "Media", poblacion: 0, baches: 0, quejasPorMil: 0 });
     expect(alta).toMatchObject({ nivel: "Alta", poblacion: 2000, baches: 2, quejasPorMil: 0.5, pctSoloRecorrido: 50 });
+  });
+
+  it("estimates the reporting rate only from surveyed potholes", () => {
+    const encuestado = (id: string, apoyos: number) => ({ ...reporte(id, "Muy alto", apoyos, 40), verificado: true });
+    const reportes = [encuestado("1", 2), encuestado("2", 0), encuestado("3", 0), encuestado("4", 0), reporte("5", "Muy alto", 3, 40)];
+    const alta = indicadoresPorNivel(reportes, agebs, new Date("2026-10-24T00:00:00Z"))[2];
+    expect(alta.verificados).toBe(4);
+    expect(alta.tasaReporte).toBe(25);
+    expect(indicadoresPorNivel(reportes, agebs, new Date())[1].tasaReporte).toBeNull();
   });
 });

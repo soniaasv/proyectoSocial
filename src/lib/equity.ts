@@ -56,6 +56,18 @@ export function kaplanMeier(observaciones: { dias: number; reparado: boolean }[]
   return { puntos, mediana };
 }
 
+/** Evaluates the step curve on every day 0..dias-1 (for charts). */
+export function curvaPorDia(curva: CurvaSupervivencia, dias: number): number[] {
+  const valores: number[] = [];
+  let i = 0;
+  let actual = 1;
+  for (let dia = 0; dia < dias; dia++) {
+    while (i < curva.puntos.length && curva.puntos[i].dia <= dia) actual = curva.puntos[i++].pendiente;
+    valores.push(actual);
+  }
+  return valores;
+}
+
 export function observacionesReparacion(reportes: Reporte[], ahora: Date) {
   return reportes.map((r) => ({
     dias: diasEntre(r.creadoEn, r.reparadoEn ?? ahora),
@@ -78,6 +90,14 @@ export interface IndicadoresNivel {
   quejasPorMil: number;
   /** Share of potholes found only by field surveys: damage nobody reported. */
   pctSoloRecorrido: number;
+  /** Potholes found by field surveys on randomly sampled streets. */
+  verificados: number;
+  /**
+   * Of the surveyed potholes, the share citizens had already reported. Surveys
+   * are a random sample, so this estimates the reporting rate free of
+   * population size and of how much damage each zone has.
+   */
+  tasaReporte: number | null;
   pctReparados: number;
   pctReabiertos: number;
   supervivencia: CurvaSupervivencia;
@@ -96,6 +116,7 @@ export function indicadoresPorNivel(
     const ciudadanos = delGrado.filter((r) => r.fuente === "ciudadano");
     const quejas = ciudadanos.reduce((sum, r) => sum + r.apoyos, 0);
     const reparadosAlgunaVez = delGrado.filter((r) => r.reparadoEn !== null);
+    const verificados = delGrado.filter((r) => r.verificado);
     return {
       nivel,
       poblacion,
@@ -104,6 +125,8 @@ export function indicadoresPorNivel(
       reportesCiudadanos: ciudadanos.length,
       quejasPorMil: poblacion > 0 ? (1000 * quejas) / poblacion : 0,
       pctSoloRecorrido: pct(delGrado.length - ciudadanos.length, delGrado.length),
+      verificados: verificados.length,
+      tasaReporte: verificados.length ? pct(verificados.filter((r) => r.fuente === "ciudadano").length, verificados.length) : null,
       pctReparados: pct(delGrado.filter((r) => r.estado === "reparado").length, delGrado.length),
       pctReabiertos: pct(reparadosAlgunaVez.filter((r) => r.reabierto).length, reparadosAlgunaVez.length),
       supervivencia: kaplanMeier(observacionesReparacion(delGrado, ahora)),

@@ -20,6 +20,7 @@ interface ReporteSimulado {
   estado: Reporte["estado"];
   reparadoHaceDias: number | null;
   reabierto: boolean;
+  verificado: boolean;
 }
 
 /** The simulated scenario stores ages, so it always ends "today". */
@@ -36,6 +37,7 @@ function reportesSimulados(ahora: Date): Reporte[] {
     estado: r.estado,
     reparadoEn: r.reparadoHaceDias === null ? null : hace(r.reparadoHaceDias),
     reabierto: r.reabierto,
+    verificado: r.verificado,
     simulado: true,
   }));
 }
@@ -72,6 +74,7 @@ export async function crearReporte(nuevo: NuevoReporte, ahora: Date) {
     estado: "pendiente",
     reparadoEn: null,
     reabierto: false,
+    verificado: false,
     simulado: false,
   };
   return { persistido: guardado !== null, reporte: enriquecer(reporte, ahora) };

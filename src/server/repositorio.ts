@@ -48,6 +48,7 @@ function aReporte(f: Fila): Reporte {
     estado: f.estado,
     reparadoEn: f.reparado_en?.toISOString() ?? null,
     reabierto: f.reabierto,
+    verificado: false,
     simulado: false,
     descripcion: f.descripcion,
     confianzaIA: f.confianza_ia,
