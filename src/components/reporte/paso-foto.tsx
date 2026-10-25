@@ -16,9 +16,12 @@ export function PasoFoto({ onConfianza }: { onConfianza: (confianza: number | nu
   const canvas = useRef<HTMLCanvasElement>(null);
   const [analisis, setAnalisis] = useState<Analisis>({ estado: "inicial" });
   const [hayModelo, setHayModelo] = useState<boolean | null>(null);
+  // The check is kept as a promise so a photo picked before it resolves still waits for it.
+  const verificacion = useRef<Promise<boolean> | null>(null);
 
   useEffect(() => {
-    modeloDisponible().then(setHayModelo);
+    verificacion.current = modeloDisponible();
+    verificacion.current.then(setHayModelo);
   }, []);
 
   async function alElegir(archivo: File | undefined) {
@@ -29,7 +32,8 @@ export function PasoFoto({ onConfianza }: { onConfianza: (confianza: number | nu
       const imagen = await leerImagen(archivo);
       dibujar(imagen, []);
       const calidad = evaluarCalidad(imagen);
-      const deteccion = hayModelo ? await detectarBaches(imagen) : null;
+      const disponible = await (verificacion.current ?? modeloDisponible());
+      const deteccion = disponible ? await detectarBaches(imagen) : null;
       if (deteccion) dibujar(imagen, deteccion.cajas);
       onConfianza(deteccion ? deteccion.confianza : null);
       setAnalisis({ estado: "listo", deteccion, calidad });
@@ -67,7 +71,7 @@ export function PasoFoto({ onConfianza }: { onConfianza: (confianza: number | nu
 
   return (
     <div className="space-y-3">
-      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line-strong bg-plane px-4 py-8 text-center transition hover:bg-card has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-focus">
+      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line-strong bg-plane px-4 py-8 text-center transition hover:bg-card has-focus-visible:outline-2 has-focus-visible:outline-focus">
         <Camera className="h-8 w-8 text-ink-2" aria-hidden="true" />
         <span className="font-medium">{tieneFoto ? "Tomar otra foto" : "Tomar o elegir una foto"}</span>
         <span className="text-sm text-ink-2">Opcional, pero ayuda a confirmar que es un bache</span>
