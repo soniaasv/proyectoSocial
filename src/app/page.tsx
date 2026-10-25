@@ -8,7 +8,7 @@ const PASOS = [
     icono: Camera,
     titulo: "Reporta en 30 segundos",
     texto:
-      "Una foto y tu ubicación. Un modelo de inteligencia artificial revisa la foto en tu propio celular, sin subirla a ningún servidor, para confirmar que es un bache.",
+      "Una foto y tu ubicación. Un modelo de inteligencia artificial revisa la foto en tu propio celular, sin subirla a ningún servidor, para ayudarte a confirmar que es un bache.",
   },
   {
     icono: Scale,
