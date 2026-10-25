@@ -20,7 +20,7 @@ export function AvisoSimulado({ compacto = false }: { compacto?: boolean }) {
       <p>
         <strong className="text-ink">Estos resultados vienen de un escenario simulado, no de datos reales de Navojoa.</strong>{" "}
         Las calles, escuelas, población y marginación sí son reales (INEGI, CONAPO, OpenStreetMap). Los reportes de baches
-        son simulados mientras el Ayuntamiento responde nuestras solicitudes de transparencia y terminamos los recorridos.
+        son simulados mientras obtenemos los datos oficiales por solicitudes de transparencia y hacemos los primeros recorridos de campo.
         Sirven para demostrar que el método funciona.{" "}
         <Link href="/metodologia#simulacion" className="font-medium text-ink underline underline-offset-2">
           Cómo se simularon
