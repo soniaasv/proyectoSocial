@@ -43,7 +43,7 @@ export function MapaBase({ puntos, seleccionado, onSeleccionar, mostrarMarginaci
     (async () => {
       const maplibregl = await import("maplibre-gl");
       if (cancelado || !contenedor.current) return;
-      // Copied to public/ by scripts/copy-maplibre-worker.mjs (see that file for why).
+      // Copied to public/ by scripts/copy-vendor.mjs (see that file for why).
       maplibregl.setWorkerUrl(`/vendor/maplibre-gl-worker.mjs?v=${maplibregl.getVersion()}`);
       const m = new maplibregl.Map({
         container: contenedor.current,
