@@ -83,7 +83,9 @@ export function calcularPrioridad(
       explicacion:
         escuelas + salud === 0
           ? `Sin escuelas ni unidades de salud a menos de ${RADIO_SERVICIOS_M} m`
-          : `${plural(escuelas, "escuela", "escuelas")} y ${plural(salud, "unidad de salud", "unidades de salud")} a menos de ${RADIO_SERVICIOS_M} m`,
+          : `${[escuelas && plural(escuelas, "escuela", "escuelas"), salud && plural(salud, "unidad de salud", "unidades de salud")]
+              .filter(Boolean)
+              .join(" y ")} a menos de ${RADIO_SERVICIOS_M} m`,
     },
     rezago: {
       valor: grado ? REZAGO[grado] : REZAGO.Bajo,
@@ -91,7 +93,12 @@ export function calcularPrioridad(
     },
     espera: {
       valor: Math.min(1, dias / ESPERA_MAXIMA_DIAS),
-      explicacion: reporte.estado === "reparado" ? `Se reparó en ${plural(dias, "día", "días")}` : `Lleva ${plural(dias, "día", "días")} esperando`,
+      explicacion:
+        reporte.estado === "reparado"
+          ? `Se reparó en ${plural(dias, "día", "días")}`
+          : dias === 0
+            ? "Reportado hoy"
+            : `Lleva ${plural(dias, "día", "días")} esperando`,
     },
   };
 

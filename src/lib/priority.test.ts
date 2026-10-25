@@ -75,6 +75,12 @@ describe("calcularPrioridad", () => {
     expect(p.factores.find((f) => f.factor === "rezago")!.explicacion).toBe("Zona con marginación media");
   });
 
+  it("only names the kinds of services that are nearby", () => {
+    const p = calcularPrioridad(reporte({ creadoEn: ahora.toISOString() }), contexto({ servicios: { escuelas: 1, salud: 0, masCercano: null } }), ahora);
+    expect(p.factores.find((f) => f.factor === "servicios")!.explicacion).toBe("1 escuela a menos de 300 m");
+    expect(p.factores.find((f) => f.factor === "espera")!.explicacion).toBe("Reportado hoy");
+  });
+
   it("treats a missing street or zone conservatively", () => {
     const p = calcularPrioridad(reporte(), contexto({ calle: null, colonia: null, ageb: null }), ahora);
     expect(p.factores.find((f) => f.factor === "vialidad")!.explicacion).toBe("Calle sin clasificar");
