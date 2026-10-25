@@ -100,7 +100,7 @@ export function FormularioReporte() {
           {SEVERIDADES.map((s) => (
             <label
               key={s.valor}
-              className="cursor-pointer rounded-2xl border-2 border-line bg-card p-4 transition has-[:checked]:border-brand has-[:checked]:bg-brand-soft has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-focus"
+              className="cursor-pointer rounded-2xl border-2 border-line bg-card p-4 transition has-checked:border-brand has-checked:bg-brand-soft has-focus-visible:outline-2 has-focus-visible:outline-focus"
             >
               <input
                 type="radio"

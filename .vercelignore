@@ -1,0 +1,7 @@
+# Only the web app is deployed; the Python pipelines and their data stay local.
+/data
+/ml
+/docs
+/db
+node_modules
+.next
