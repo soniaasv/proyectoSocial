@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Third-party MapLibre worker copied at build time.
     "public/vendor/**",
+    // Python projects with their own virtualenvs.
+    "data/**",
+    "ml/**",
   ]),
 ]);
 
