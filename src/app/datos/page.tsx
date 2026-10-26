@@ -79,7 +79,7 @@ export default function DatosPage() {
         </h2>
         <ul className="grid gap-4 sm:grid-cols-2">
           {DESCARGAS.map((d) => (
-            <li key={d.archivo} className="flex flex-col rounded-2xl border border-line bg-card p-5">
+            <li key={d.archivo} className="flex flex-col rounded-lg border border-line bg-card p-5">
               <div className="flex items-start gap-3">
                 <d.icono className="mt-0.5 h-5 w-5 shrink-0 text-ink-2" aria-hidden="true" />
                 <div>
@@ -93,7 +93,7 @@ export default function DatosPage() {
               <a
                 href={d.archivo}
                 download
-                className="mt-4 inline-flex items-center gap-2 self-start rounded-full border border-line-strong px-4 py-2 text-sm font-medium hover:bg-plane"
+                className="mt-4 inline-flex items-center gap-2 self-start rounded-md border border-line-strong px-4 py-2 text-sm font-medium hover:bg-plane"
               >
                 <Download className="h-4 w-4" aria-hidden="true" /> Descargar
               </a>

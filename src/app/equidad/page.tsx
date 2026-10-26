@@ -54,7 +54,7 @@ async function Tablero() {
     <div className="space-y-12">
       {incluyeSimulados && <AvisoSimulado />}
 
-      <section aria-labelledby="hallazgo" className="grid gap-4 md:grid-cols-3">
+      <section aria-labelledby="hallazgo" className="grid border-y border-line md:grid-cols-3">
         <h2 id="hallazgo" className="sr-only">
           Hallazgos principales
         </h2>
@@ -186,9 +186,9 @@ async function Tablero() {
 
 function Hallazgo({ valor, texto }: { valor: string; texto: string }) {
   return (
-    <div className="rounded-2xl border border-line bg-card p-5">
-      <p className="text-3xl font-semibold tracking-tight">{valor}</p>
-      <p className="mt-2 text-sm text-ink-2">{texto}</p>
+    <div className="border-line py-6 not-first-of-type:border-t md:px-6 md:first-of-type:pl-0 md:last-of-type:pr-0 md:not-first-of-type:border-t-0 md:not-first-of-type:border-l">
+      <p className="whitespace-nowrap text-4xl font-semibold tracking-[-0.03em]">{valor}</p>
+      <p className="mt-3 text-sm text-ink-2">{texto}</p>
     </div>
   );
 }

@@ -100,7 +100,7 @@ export function FormularioReporte() {
           {SEVERIDADES.map((s) => (
             <label
               key={s.valor}
-              className="cursor-pointer rounded-2xl border-2 border-line bg-card p-4 transition has-checked:border-brand has-checked:bg-brand-soft has-focus-visible:outline-2 has-focus-visible:outline-focus"
+              className="cursor-pointer rounded-lg border-2 border-line bg-card p-4 transition has-checked:border-brand has-checked:bg-brand-soft has-focus-visible:outline-2 has-focus-visible:outline-focus"
             >
               <input
                 type="radio"
@@ -152,7 +152,7 @@ export function FormularioReporte() {
         <button
           type="submit"
           disabled={!ubicacion || !severidad || envio.estado === "enviando"}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3.5 text-base font-semibold text-brand-ink transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-brand px-5 py-3.5 text-base font-semibold text-brand-ink transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {envio.estado === "enviando" && <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" />}
           Enviar reporte
@@ -198,12 +198,12 @@ function Resultado({ persistido, reporte }: { persistido: boolean; reporte: Repo
         </p>
       )}
 
-      <section className="rounded-2xl border border-line bg-card p-5">
+      <section className="rounded-lg border border-line bg-card p-5">
         <h3 className="mb-4 font-semibold">Así se calculó su prioridad</h3>
         <DesglosePrioridad prioridad={reporte.prioridad} />
       </section>
 
-      <section className="space-y-3 rounded-2xl border-2 border-brand bg-brand-soft p-5">
+      <section className="space-y-3 rounded-lg border-2 border-brand bg-brand-soft p-5">
         <h3 className="font-semibold">Para que lo reparen, envíalo también al Ayuntamiento</h3>
         <p className="text-sm text-ink-2">
           Calle Justa no sustituye el canal oficial. Preparamos el mensaje con la ubicación exacta para el WhatsApp de
@@ -213,17 +213,17 @@ function Resultado({ persistido, reporte }: { persistido: boolean; reporte: Repo
           href={enlaceWhatsApp(reporte)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 font-semibold text-brand-ink hover:opacity-90"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-brand px-5 py-3 font-semibold text-brand-ink hover:opacity-90"
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" /> Enviar por WhatsApp
         </a>
       </section>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Link href="/mapa" className="flex flex-1 items-center justify-center gap-2 rounded-full border border-line-strong bg-card px-5 py-3 font-medium">
+        <Link href="/mapa" className="flex flex-1 items-center justify-center gap-2 rounded-md border border-line-strong bg-card px-5 py-3 font-medium">
           Ver el mapa <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
-        <a href="/reportar" className="flex flex-1 items-center justify-center rounded-full border border-line-strong bg-card px-5 py-3 font-medium">
+        <a href="/reportar" className="flex flex-1 items-center justify-center rounded-md border border-line-strong bg-card px-5 py-3 font-medium">
           Reportar otro bache
         </a>
       </div>

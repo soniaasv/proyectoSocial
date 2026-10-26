@@ -1,6 +1,8 @@
 import { ArrowRight, Camera, ChartColumn, Scale } from "lucide-react";
 import Link from "next/link";
+import { SEVERIDAD_LABEL } from "@/lib/domain";
 import { FACTOR_LABEL, PESOS, type Factor } from "@/lib/priority";
+import { construirMapaEstatico } from "@/server/mapa-estatico";
 import { CIFRAS } from "@/lib/site";
 
 const PASOS = [
@@ -25,24 +27,25 @@ const PASOS = [
 ];
 
 const ODS = [
-  { numero: 11, nombre: "Ciudades y comunidades sostenibles", color: "#FD9D24" },
-  { numero: 10, nombre: "Reducción de las desigualdades", color: "#DD1367" },
-  { numero: 9, nombre: "Industria, innovación e infraestructura", color: "#FD6925" },
-  { numero: 16, nombre: "Paz, justicia e instituciones sólidas", color: "#00689D" },
-  { numero: 3, nombre: "Salud y bienestar", color: "#4C9F38" },
+  { numero: 11, nombre: "Ciudades y comunidades sostenibles" },
+  { numero: 10, nombre: "Reducción de las desigualdades" },
+  { numero: 9, nombre: "Industria, innovación e infraestructura" },
+  { numero: 16, nombre: "Paz, justicia e instituciones sólidas" },
+  { numero: 3, nombre: "Salud y bienestar" },
 ];
 
 export default function Home() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-line bg-plane">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1.2fr_1fr] md:items-center md:py-24">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-[1fr_1.1fr] md:items-center md:py-24">
           <div className="space-y-6">
-            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1 text-xs font-medium text-ink-2">
-              Navojoa, Sonora · Observatorio ciudadano
+            <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.1em] text-ink-3 sm:tracking-[0.14em]">
+              <span className="hidden h-px w-8 bg-line-strong sm:block" aria-hidden="true" />
+              Observatorio ciudadano · Navojoa, Sonora
             </p>
-            <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-6xl">
-              19,208 baches. <span className="text-brand">¿Quién espera más?</span>
+            <h1 className="text-[2.75rem] font-semibold leading-[1.02] tracking-[-0.035em] text-balance md:text-7xl">
+              19,208 baches. <span className="text-ink-3">¿Quién espera más?</span>
             </h1>
             <p className="max-w-xl text-lg text-ink-2 text-pretty">
               Calle Justa mide si las calles de Navojoa se reparan donde más se necesita, y no solo donde más se queja
@@ -51,19 +54,19 @@ export default function Home() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/mapa"
-                className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 font-medium text-brand-ink shadow-sm transition hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-md bg-brand px-5 py-3 text-sm font-medium text-brand-ink transition hover:opacity-85"
               >
                 Explorar el mapa <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/reportar"
-                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-card px-5 py-3 font-medium transition hover:bg-surface"
+                className="inline-flex items-center gap-2 rounded-md border border-line-strong bg-card px-5 py-3 text-sm font-medium transition hover:bg-plane"
               >
                 Reportar un bache
               </Link>
             </div>
           </div>
-          <HeroIlustracion />
+          <MapaHero />
         </div>
       </section>
 
@@ -71,13 +74,16 @@ export default function Home() {
         <h2 id="cifras" className="text-sm font-medium uppercase tracking-wide text-ink-3">
           El tamaño del problema
         </h2>
-        <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {CIFRAS.map((c) => (
-            <li key={c.valor} className="flex flex-col rounded-2xl border border-line bg-card p-5">
-              <p className="text-3xl font-semibold tracking-tight">{c.valor}</p>
-              <p className="mt-2 flex-1 text-sm text-ink-2">{c.etiqueta}</p>
-              <a href={c.url} className="mt-4 text-xs text-ink-3 underline underline-offset-2 hover:text-ink">
-                Fuente: {c.fuente}
+        <ul className="mt-8 grid border-t border-line sm:grid-cols-2 lg:grid-cols-4">
+          {CIFRAS.map((c, i) => (
+            <li
+              key={c.valor}
+              className={`flex flex-col border-b border-line py-6 sm:px-6 lg:border-b-0 ${i % 2 ? "sm:border-l" : "sm:pl-0"} ${i > 0 ? "lg:border-l lg:pl-6" : "lg:pl-0"}`}
+            >
+              <p className="whitespace-nowrap text-4xl font-semibold tracking-[-0.03em] lg:text-[2.6rem]">{c.valor}</p>
+              <p className="mt-3 flex-1 text-sm text-ink-2">{c.etiqueta}</p>
+              <a href={c.url} className="mt-4 text-xs text-ink-3 underline decoration-line-strong underline-offset-2 hover:text-ink">
+                {c.fuente}
               </a>
             </li>
           ))}
@@ -101,7 +107,7 @@ export default function Home() {
               una forma más justa de decidir qué se repara primero.
             </p>
           </div>
-          <blockquote className="flex flex-col justify-center rounded-2xl border border-line bg-card p-6">
+          <blockquote className="flex flex-col justify-center rounded-lg border border-line bg-card p-6">
             <p className="text-lg text-pretty">
               “Los barrios que reportan menos reciben menos reparaciones, aunque sus calles estén igual o peor.”
             </p>
@@ -118,7 +124,7 @@ export default function Home() {
         </h2>
         <ol className="mt-8 grid gap-6 md:grid-cols-3">
           {PASOS.map((paso, i) => (
-            <li key={paso.titulo} className="rounded-2xl border border-line bg-card p-6">
+            <li key={paso.titulo} className="rounded-lg border border-line bg-card p-6">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-soft text-brand">
                   <paso.icono className="h-5 w-5" aria-hidden="true" />
@@ -146,7 +152,7 @@ export default function Home() {
               Ver la metodología completa <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="rounded-2xl border border-line bg-card p-6">
+          <div className="rounded-lg border border-line bg-card p-6">
             <p className="text-sm font-medium">Peso de cada factor (de 100 puntos)</p>
             <ul className="mt-4 space-y-4">
               {(Object.keys(PESOS) as Factor[]).map((factor) => (
@@ -156,7 +162,7 @@ export default function Home() {
                     <span className="tabular text-ink-2">{PESOS[factor]}</span>
                   </div>
                   <div className="mt-1.5 h-2 rounded-full bg-plane" aria-hidden="true">
-                    <div className="h-full rounded-full bg-prio-3" style={{ width: `${(PESOS[factor] / 30) * 100}%` }} />
+                    <div className="h-full rounded-full bg-ink" style={{ width: `${(PESOS[factor] / 30) * 100}%` }} />
                   </div>
                 </li>
               ))}
@@ -172,10 +178,7 @@ export default function Home() {
         <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {ODS.map((ods) => (
             <li key={ods.numero} className="flex items-center gap-3 rounded-xl border border-line bg-card p-3">
-              <span
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-lg font-bold text-white"
-                style={{ background: ods.color }}
-              >
+              <span className="tabular flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-ink text-lg font-semibold text-surface">
                 {ods.numero}
               </span>
               <span className="text-sm">{ods.nombre}</span>
@@ -190,7 +193,7 @@ export default function Home() {
             Quiénes somos
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-2xl border border-line bg-card p-6">
+            <div className="rounded-lg border border-line bg-card p-6">
               <p className="font-semibold">Sonia Soto Valenzuela</p>
               <p className="text-sm text-ink-3">Líder del proyecto · Ciencia de datos</p>
               <p className="mt-3 text-sm text-ink-2">
@@ -198,7 +201,7 @@ export default function Home() {
                 instituciones.
               </p>
             </div>
-            <div className="rounded-2xl border border-line bg-card p-6">
+            <div className="rounded-lg border border-line bg-card p-6">
               <p className="font-semibold">Chema</p>
               <p className="text-sm text-ink-3">Ingeniería de software e IA</p>
               <p className="mt-3 text-sm text-ink-2">
@@ -212,33 +215,34 @@ export default function Home() {
   );
 }
 
-/** Stylized street grid with potholes colored by priority. Decorative. */
-function HeroIlustracion() {
-  const baches = [
-    { x: 92, y: 70, r: 9, c: "var(--prio-4)" },
-    { x: 214, y: 150, r: 7, c: "var(--prio-3)" },
-    { x: 150, y: 232, r: 6, c: "var(--prio-2)" },
-    { x: 300, y: 92, r: 5, c: "var(--prio-1)" },
-    { x: 262, y: 262, r: 8, c: "var(--prio-3)" },
-    { x: 54, y: 196, r: 5, c: "var(--prio-2)" },
-  ];
+/** Navojoa's real street network with every pending pothole, colored by severity. */
+function MapaHero() {
+  const { ancho, alto, calles, baches } = construirMapaEstatico();
+  const color = { 1: "var(--prio-1)", 2: "var(--prio-2)", 3: "var(--prio-4)" } as const;
+  const radio = { 1: 2.6, 2: 3.4, 3: 4.4 } as const;
   return (
-    <svg viewBox="0 0 360 320" className="w-full rounded-3xl border border-line bg-card" aria-hidden="true">
-      <rect x="20" y="20" width="320" height="280" rx="18" fill="var(--plane)" />
-      {[70, 150, 232].map((y) => (
-        <rect key={`h${y}`} x="20" y={y - 9} width="320" height="18" fill="var(--card)" />
-      ))}
-      {[92, 214, 300].map((x) => (
-        <rect key={`v${x}`} x={x - 9} y="20" width="18" height="280" fill="var(--card)" />
-      ))}
-      <path d="M20 262 L340 196" stroke="var(--card)" strokeWidth="22" />
-      <path d="M20 262 L340 196" stroke="var(--line-strong)" strokeWidth="1.5" strokeDasharray="6 8" />
-      {baches.map((b) => (
-        <g key={`${b.x}-${b.y}`}>
-          <circle cx={b.x} cy={b.y} r={b.r + 6} fill={b.c} opacity="0.18" />
-          <circle cx={b.x} cy={b.y} r={b.r} fill={b.c} stroke="var(--card)" strokeWidth="2" />
-        </g>
-      ))}
-    </svg>
+    <figure className="space-y-3">
+      <svg
+        viewBox={`0 0 ${ancho} ${alto}`}
+        className="w-full overflow-hidden"
+        role="img"
+        aria-label={`Mapa de Navojoa con ${baches.length} baches pendientes del escenario de demostración`}
+      >
+        <path d={calles.locales} fill="none" stroke="var(--line-strong)" strokeWidth="0.7" strokeLinecap="round" />
+        <path d={calles.principales} fill="none" stroke="var(--ink-3)" strokeWidth="1.6" strokeLinecap="round" />
+        {baches.map((b, i) => (
+          <circle key={i} cx={b.x} cy={b.y} r={radio[b.severidad]} fill={color[b.severidad]} stroke="var(--plane)" strokeWidth="1" />
+        ))}
+      </svg>
+      <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-3">
+        <span>{baches.length} baches pendientes (escenario de demostración)</span>
+        {([1, 2, 3] as const).map((s) => (
+          <span key={s} className="flex items-center gap-1.5">
+            <span className="rounded-full" style={{ width: radio[s] * 2, height: radio[s] * 2, background: color[s] }} />
+            {SEVERIDAD_LABEL[s]}
+          </span>
+        ))}
+      </figcaption>
+    </figure>
   );
 }

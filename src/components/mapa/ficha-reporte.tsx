@@ -65,7 +65,7 @@ export function FichaReporte({ reporte, onCerrar }: { reporte: ReporteEnriquecid
           href={enlaceWhatsApp(reporte)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-full border border-line-strong bg-card px-4 py-2.5 text-sm font-medium hover:bg-plane"
+          className="flex w-full items-center justify-center gap-2 rounded-md border border-line-strong bg-card px-4 py-2.5 text-sm font-medium hover:bg-plane"
         >
           <MessageCircle className="h-4 w-4" aria-hidden="true" /> Enviar al WhatsApp del Ayuntamiento
         </a>

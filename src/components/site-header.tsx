@@ -35,7 +35,7 @@ export function SiteHeader() {
 
         <Link
           href="/reportar"
-          className="ml-auto hidden rounded-full bg-brand px-4 py-2 text-sm font-medium text-brand-ink shadow-sm transition hover:opacity-90 md:inline-flex"
+          className="ml-auto hidden rounded-md bg-brand px-4 py-2 text-sm font-medium text-brand-ink transition hover:opacity-90 md:inline-flex"
         >
           Reportar un bache
         </Link>
@@ -71,7 +71,7 @@ export function SiteHeader() {
           <Link
             href="/reportar"
             onClick={() => setAbierto(false)}
-            className="flex w-full justify-center rounded-full bg-brand px-4 py-3 font-medium text-brand-ink"
+            className="flex w-full justify-center rounded-md bg-brand px-4 py-3 font-medium text-brand-ink"
           >
             Reportar un bache
           </Link>
