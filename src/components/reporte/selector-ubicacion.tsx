@@ -20,7 +20,7 @@ export function SelectorUbicacion({ valor, onCambio }: { valor: Ubicacion | null
   const contenedor = useRef<HTMLDivElement>(null);
   const mapa = useRef<MapaLibre | null>(null);
   const marcador = useRef<Marker | null>(null);
-  const [gps, setGps] = useState<"inactivo" | "buscando" | "error" | "fuera">("inactivo");
+  const [gps, setGps] = useState<"inactivo" | "buscando" | "denegado" | "error" | "fuera">("inactivo");
   const alCambiar = useEffectEvent((u: Ubicacion) => onCambio(u));
 
   useEffect(() => {
@@ -66,15 +66,22 @@ export function SelectorUbicacion({ valor, onCambio }: { valor: Ubicacion | null
   function usarGps() {
     if (!navigator.geolocation) return setGps("error");
     setGps("buscando");
+    const exito = ({ coords }: GeolocationPosition) => {
+      const u = { lat: coords.latitude, lng: coords.longitude };
+      if (!dentro(u)) return setGps("fuera");
+      setGps("inactivo");
+      onCambio(u);
+    };
+    const fallo = (e: GeolocationPositionError) => setGps(e.code === e.PERMISSION_DENIED ? "denegado" : "error");
+    // GPS first; laptops and indoor phones often have no fix, so fall back to
+    // the network-based position (Wi-Fi, cell), which is usually good enough.
     navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        const u = { lat: coords.latitude, lng: coords.longitude };
-        if (!dentro(u)) return setGps("fuera");
-        setGps("inactivo");
-        onCambio(u);
+      exito,
+      (e) => {
+        if (e.code === e.PERMISSION_DENIED) return fallo(e);
+        navigator.geolocation.getCurrentPosition(exito, fallo, { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 });
       },
-      () => setGps("error"),
-      { enableHighAccuracy: true, timeout: 15000 },
+      { enableHighAccuracy: true, timeout: 8000 },
     );
   }
 
@@ -83,12 +90,22 @@ export function SelectorUbicacion({ valor, onCambio }: { valor: Ubicacion | null
       <button
         type="button"
         onClick={usarGps}
-        className="flex w-full items-center justify-center gap-2 rounded-full bg-ink px-4 py-3 font-medium text-surface transition hover:opacity-90"
+        className="flex w-full items-center justify-center gap-2 rounded-md bg-ink px-4 py-3 font-medium text-surface transition hover:opacity-85"
       >
         {gps === "buscando" ? <LoaderCircle className="h-4 w-4 animate-spin" aria-hidden="true" /> : <LocateFixed className="h-4 w-4" aria-hidden="true" />}
         Usar mi ubicación actual
       </button>
-      {gps === "error" && <p role="alert" className="text-sm text-ink-2">No pudimos obtener tu ubicación. Toca el mapa para marcar el bache.</p>}
+      {gps === "denegado" && (
+        <p role="alert" className="text-sm text-ink-2">
+          Tu navegador tiene bloqueada la ubicación para este sitio. Permítela desde el ícono junto a la dirección de la
+          página (o en los ajustes de ubicación de tu teléfono) y vuelve a intentarlo, o toca el mapa para marcar el bache.
+        </p>
+      )}
+      {gps === "error" && (
+        <p role="alert" className="text-sm text-ink-2">
+          No pudimos encontrar tu ubicación; pasa a veces en computadoras o bajo techo. Toca el mapa para marcar el bache.
+        </p>
+      )}
       {gps === "fuera" && <p role="alert" className="text-sm text-ink-2">Parece que no estás en Navojoa. Toca el mapa para marcar el bache.</p>}
       <p className="text-center text-xs text-ink-3">o toca el mapa donde está el bache (puedes arrastrar el marcador)</p>
       <div ref={contenedor} className="h-72 overflow-hidden rounded-xl border border-line" aria-label="Mapa para marcar la ubicación del bache" />
