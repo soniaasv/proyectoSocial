@@ -6,25 +6,25 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const BACHES = [
-  { x: 820, y: 170, r: 26, c: "#8a1c17" },
-  { x: 990, y: 300, r: 20, c: "#c23a2c" },
-  { x: 880, y: 430, r: 16, c: "#e0674f" },
-  { x: 1070, y: 470, r: 13, c: "#f0a08a" },
-  { x: 760, y: 340, r: 14, c: "#e0674f" },
+  { x: 820, y: 170, r: 26, c: "#7f1d1d" },
+  { x: 990, y: 300, r: 20, c: "#b91c1c" },
+  { x: 880, y: 430, r: 16, c: "#dc2626" },
+  { x: 1070, y: 470, r: 13, c: "#f87171" },
+  { x: 760, y: 340, r: 14, c: "#dc2626" },
 ];
 
 export default function Image() {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#f6f5f1", fontFamily: "sans-serif" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#f5f5f5", fontFamily: "sans-serif" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 72px", width: 680 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 34, fontWeight: 700, color: "#0b0b0b" }}>
-            <div style={{ width: 52, height: 52, borderRadius: 12, background: "#c23a2c" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 34, fontWeight: 700, color: "#0a0a0a" }}>
+            <div style={{ width: 52, height: 52, borderRadius: 11, background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center" }}><div style={{ width: 16, height: 12, borderRadius: 8, background: "#dc2626" }} /></div>
             {SITE.nombre}
           </div>
-          <div style={{ marginTop: 40, fontSize: 64, fontWeight: 700, lineHeight: 1.05, color: "#0b0b0b" }}>19,208 baches.</div>
-          <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.05, color: "#c23a2c" }}>¿Quién espera más?</div>
-          <div style={{ marginTop: 28, fontSize: 28, color: "#52514e", lineHeight: 1.3 }}>
+          <div style={{ marginTop: 40, fontSize: 64, fontWeight: 700, lineHeight: 1.05, color: "#0a0a0a" }}>19,208 baches.</div>
+          <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.05, color: "#6b6b6b" }}>¿Quién espera más?</div>
+          <div style={{ marginTop: 28, fontSize: 28, color: "#525252", lineHeight: 1.3 }}>
             Observatorio ciudadano de baches de Navojoa, Sonora
           </div>
         </div>

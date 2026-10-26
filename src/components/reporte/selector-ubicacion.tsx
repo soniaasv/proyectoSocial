@@ -37,7 +37,7 @@ export function SelectorUbicacion({ valor, onCambio }: { valor: Ubicacion | null
         attributionControl: { compact: true },
       });
       m.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-      const pin = new maplibregl.Marker({ color: "#c23a2c", draggable: true });
+      const pin = new maplibregl.Marker({ color: "#dc2626", draggable: true });
       pin.on("dragend", () => {
         const { lat, lng } = pin.getLngLat();
         alCambiar({ lat, lng });

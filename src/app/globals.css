@@ -1,79 +1,80 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Chart and map colors were validated with the dataviz
- * palette checker (ordinal ramps: monotone lightness, single hue, light end
- * clears the surface) separately for light and dark surfaces.
+ * Design tokens. The interface is monochrome; only data carries color.
+ * Data ramps are ordinal (one hue, monotone lightness, light end at least
+ * 2:1 against the surface), checked separately for light and dark.
  */
 :root {
   color-scheme: light;
-  --surface: #fcfcfb;
-  --plane: #f6f5f1;
+  /* Interface: neutral grays only. Color is reserved for data. */
+  --surface: #ffffff;
+  --plane: #f5f5f5;
   --card: #ffffff;
-  --ink: #0b0b0b;
-  --ink-2: #52514e;
-  --ink-3: #6f6e69;
-  --line: #e1e0d9;
-  --line-strong: #c3c2b7;
-  --brand: #c23a2c;
+  --ink: #0a0a0a;
+  --ink-2: #525252;
+  --ink-3: #6b6b6b;
+  --line: #e5e5e5;
+  --line-strong: #d4d4d4;
+  --brand: #0a0a0a;
   --brand-ink: #ffffff;
-  --brand-soft: #fbe9e5;
-  --focus: #2a78d6;
-  --good: #006300;
-  --good-soft: #e3f3e3;
+  --brand-soft: #f0f0f0;
+  --focus: #0a0a0a;
+  --good: #15803d;
+  --good-soft: #ecfdf3;
 
-  /* Priority (Baja -> Urgente): one warm hue, light to dark. */
-  --prio-1: #f0a08a;
-  --prio-2: #e0674f;
-  --prio-3: #c23a2c;
-  --prio-4: #8a1c17;
+  /* Priority (Baja -> Urgente): one red hue, light to dark. */
+  --prio-1: #f87171;
+  --prio-2: #dc2626;
+  --prio-3: #b91c1c;
+  --prio-4: #7f1d1d;
 
   /* Marginalization (Baja -> Alta): one blue hue, light to dark. */
-  --marg-1: #86b6ef;
-  --marg-2: #2a78d6;
-  --marg-3: #104281;
+  --marg-1: #60a5fa;
+  --marg-2: #2563eb;
+  --marg-3: #1e3a8a;
   /* Text set inside each marginalization fill. */
-  --marg-1-ink: #0b0b0b;
+  --marg-1-ink: #0a0a0a;
   --marg-2-ink: #ffffff;
   --marg-3-ink: #ffffff;
 
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
+  --grid: #ededed;
+  --axis: #d4d4d4;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --surface: #1a1a19;
-    --plane: #121211;
-    --card: #222220;
-    --ink: #f0efec;
-    --ink-2: #c3c2b7;
-    --ink-3: #a3a29a;
-    --line: #2c2c2a;
-    --line-strong: #383835;
-    --brand: #e0674f;
-    --brand-ink: #0b0b0b;
-    --brand-soft: #3a1f1a;
-    --focus: #6da7ec;
-    --good: #0ca30c;
-    --good-soft: #142a14;
+    --surface: #0a0a0a;
+    --plane: #111111;
+    --card: #171717;
+    --ink: #fafafa;
+    --ink-2: #a3a3a3;
+    --ink-3: #8f8f8f;
+    --line: #262626;
+    --line-strong: #3a3a3a;
+    --brand: #fafafa;
+    --brand-ink: #0a0a0a;
+    --brand-soft: #262626;
+    --focus: #fafafa;
+    --good: #22c55e;
+    --good-soft: #0f2a1a;
 
     /* On dark, magnitude reads as brightness. */
-    --prio-1: #a8302a;
-    --prio-2: #d2513c;
-    --prio-3: #e8826b;
-    --prio-4: #f6b8a6;
+    --prio-1: #991b1b;
+    --prio-2: #dc2626;
+    --prio-3: #f87171;
+    --prio-4: #fecaca;
 
-    --marg-1: #184f95;
-    --marg-2: #3987e5;
-    --marg-3: #9ec5f4;
+    --marg-1: #1e40af;
+    --marg-2: #3b82f6;
+    --marg-3: #93c5fd;
     --marg-1-ink: #ffffff;
-    --marg-2-ink: #ffffff;
-    --marg-3-ink: #0b0b0b;
+    --marg-2-ink: #0a0a0a;
+    --marg-3-ink: #0a0a0a;
 
-    --grid: #2c2c2a;
-    --axis: #383835;
+    --grid: #1f1f1f;
+    --axis: #3a3a3a;
   }
 }
 

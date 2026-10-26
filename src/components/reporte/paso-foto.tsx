@@ -56,11 +56,11 @@ export function PasoFoto({ onConfianza }: { onConfianza: (confianza: number | nu
       const [x, y, w, h] = [caja.x * escala, caja.y * escala, caja.ancho * escala, caja.alto * escala];
       ctx.strokeStyle = "#ffffff";
       ctx.strokeRect(x, y, w, h);
-      ctx.strokeStyle = "#c23a2c";
+      ctx.strokeStyle = "#dc2626";
       ctx.strokeRect(x + ctx.lineWidth, y + ctx.lineWidth, w - 2 * ctx.lineWidth, h - 2 * ctx.lineWidth);
       const etiqueta = `Bache ${Math.round(caja.confianza * 100)}%`;
       const ancho = ctx.measureText(etiqueta).width + 12;
-      ctx.fillStyle = "#c23a2c";
+      ctx.fillStyle = "#dc2626";
       ctx.fillRect(x, Math.max(0, y - 28), ancho, 26);
       ctx.fillStyle = "#ffffff";
       ctx.fillText(etiqueta, x + 6, Math.max(19, y - 9));
@@ -71,7 +71,7 @@ export function PasoFoto({ onConfianza }: { onConfianza: (confianza: number | nu
 
   return (
     <div className="space-y-3">
-      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line-strong bg-plane px-4 py-8 text-center transition hover:bg-card has-focus-visible:outline-2 has-focus-visible:outline-focus">
+      <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-line-strong bg-plane px-4 py-8 text-center transition hover:bg-card has-focus-visible:outline-2 has-focus-visible:outline-focus">
         <Camera className="h-8 w-8 text-ink-2" aria-hidden="true" />
         <span className="font-medium">{tieneFoto ? "Tomar otra foto" : "Tomar o elegir una foto"}</span>
         <span className="text-sm text-ink-2">Opcional, pero ayuda a confirmar que es un bache</span>

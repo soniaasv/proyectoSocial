@@ -9,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-MX",
     start_url: "/",
     display: "standalone",
-    background_color: "#fcfcfb",
-    theme_color: "#c23a2c",
+    background_color: "#ffffff",
+    theme_color: "#0a0a0a",
     icons: [{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" }],
     shortcuts: [{ name: "Reportar un bache", url: "/reportar" }],
   };

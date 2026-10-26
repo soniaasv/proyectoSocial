@@ -175,7 +175,7 @@ function Interruptor({ checked, onChange, label }: { checked: boolean; onChange:
 
 function Leyenda({ marginacion, reparados, servicios }: { marginacion: boolean; reparados: boolean; servicios: boolean }) {
   return (
-    <div className="pointer-events-none absolute left-3 top-3 max-w-[calc(100%-4.5rem)] space-y-2 rounded-xl border border-black/10 bg-white/95 p-3 text-xs text-[#0b0b0b] shadow-sm md:bottom-3 md:top-auto">
+    <div className="pointer-events-none absolute left-3 top-3 max-w-[calc(100%-4.5rem)] space-y-2 rounded-xl border border-black/10 bg-white/95 p-3 text-xs text-[#0a0a0a] shadow-sm md:bottom-3 md:top-auto">
       <p className="font-medium">Prioridad</p>
       <ul className="flex flex-wrap gap-x-3 gap-y-1">
         {NIVELES.toReversed().map(({ nombre }) => (
@@ -189,14 +189,14 @@ function Leyenda({ marginacion, reparados, servicios }: { marginacion: boolean; 
         ))}
         {reparados && (
           <li className="flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full border-[1.5px] border-[#52514e] bg-white" /> Reparado
+            <span className="h-2 w-2 rounded-full border-[1.5px] border-[#525252] bg-white" /> Reparado
           </li>
         )}
       </ul>
       {servicios && (
         <p className="flex items-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-[#52514e]" /> Escuela
-          <span className="ml-2 h-2 w-2 rounded-full bg-[#0b0b0b]" /> Salud
+          <span className="h-2 w-2 rounded-full bg-[#525252]" /> Escuela
+          <span className="ml-2 h-2 w-2 rounded-full bg-[#0a0a0a]" /> Salud
         </p>
       )}
       {marginacion && (

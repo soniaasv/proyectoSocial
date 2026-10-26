@@ -87,7 +87,7 @@ export function MapaBase({ puntos, seleccionado, onSeleccionar, mostrarMarginaci
           layout: { visibility: "none" },
           paint: {
             "circle-radius": 4,
-            "circle-color": ["match", ["get", "tipo"], "escuela", "#52514e", "#0b0b0b"],
+            "circle-color": ["match", ["get", "tipo"], "escuela", "#525252", "#0a0a0a"],
             "circle-stroke-color": "#ffffff",
             "circle-stroke-width": 1.5,
           },
@@ -102,7 +102,7 @@ export function MapaBase({ puntos, seleccionado, onSeleccionar, mostrarMarginaci
           paint: {
             "circle-radius": 3.5,
             "circle-color": "rgba(255,255,255,0.9)",
-            "circle-stroke-color": "#52514e",
+            "circle-stroke-color": "#525252",
             "circle-stroke-width": 1.5,
           },
         });
@@ -113,7 +113,7 @@ export function MapaBase({ puntos, seleccionado, onSeleccionar, mostrarMarginaci
           filter: ["==", ["get", "reparado"], false],
           paint: {
             "circle-radius": porNivel(RADIO_NIVEL, 4) as never,
-            "circle-color": porNivel(PRIORIDAD_HEX, "#999") as never,
+            "circle-color": porNivel(PRIORIDAD_HEX, "#a3a3a3") as never,
             "circle-stroke-color": "#ffffff",
             "circle-stroke-width": 1.5,
           },
@@ -126,7 +126,7 @@ export function MapaBase({ puntos, seleccionado, onSeleccionar, mostrarMarginaci
           paint: {
             "circle-radius": 13,
             "circle-color": "rgba(0,0,0,0)",
-            "circle-stroke-color": "#0b0b0b",
+            "circle-stroke-color": "#0a0a0a",
             "circle-stroke-width": 2.5,
           },
         });
