@@ -40,7 +40,7 @@ Lo que **nadie mide de forma independiente** es:
 | 1 | Unidad de análisis: colonia y AGEB urbana | CONAPO 2020, Marco Geoestadístico INEGI 2020 |
 | 2 | Contexto de cada bache: tipo de vialidad, escuelas y hospitales cercanos | OpenStreetMap |
 | 3 | Población expuesta | Censo 2020 por AGEB |
-| 4 | Reportes y reparaciones | Solicitudes de transparencia, recorridos propios, reportes en la plataforma |
+| 4 | Reportes y reparaciones | Reportes de vecinos en la plataforma (fuente principal); recorridos propios y solicitudes de transparencia como contraste |
 | 5 | Equidad: reportes por cada 1,000 habitantes y tiempo de reparación por grado de marginación (análisis de supervivencia) | Pasos 1 a 4 |
 | 6 | Contrafactual: ranking por quejas frente a ranking por índice | Paso 5 |
 

@@ -98,7 +98,7 @@ Se compara la proporción de reparaciones que van a zonas de marginación alta y
 
 ## 6. Escenario simulado
 
-Navojoa no publica datos abiertos de baches. Mientras se obtienen los datos oficiales por solicitudes de transparencia y los de recorridos propios, la plataforma usa un **escenario simulado** con semilla fija (20261024). Su único propósito es demostrar el método de punta a punta. **Sus resultados no describen a Navojoa.**
+Los baches de la plataforma los reportan los vecinos, lo que da datos actuales y abiertos en lugar de depender de registros del gobierno que no son públicos y pueden estar desactualizados. Mientras se reúnen los primeros reportes reales, la plataforma usa un **escenario simulado** con semilla fija (20261024). Su único propósito es demostrar el método de punta a punta. **Sus resultados no describen a Navojoa.**
 
 | Componente | Supuesto | Parámetro |
 |---|---|---|

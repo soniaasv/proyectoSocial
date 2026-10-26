@@ -1,8 +1,7 @@
 """Generate a SIMULATED scenario of pothole reports for Navojoa.
 
-There is no open pothole dataset for Navojoa yet (the municipal records are
-still to be requested through transparency requests). Until real data
-arrives, the app runs
+Potholes are meant to be reported by residents on the platform. Until the
+first real reports come in, the app runs
 on this scenario so the methodology can be demonstrated end to end. Every
 record is flagged `simulado: true` and the UI labels it as such.
 

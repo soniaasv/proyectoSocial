@@ -117,10 +117,10 @@ export default function MetodologiaPage() {
 
       <Bloque titulo="El escenario simulado" id="simulacion">
         <p className="text-ink-2">
-          Navojoa todavía no publica datos abiertos de baches. Vamos a solicitar por transparencia la base de reportes
-          ciudadanos, la bitácora de bacheo y el estudio de geolocalización de 19,208 baches. Mientras tanto, la
-          plataforma funciona con un <strong className="text-ink">escenario simulado</strong>, con semilla fija y
-          supuestos tomados de la literatura. Sirve para demostrar que el método funciona de punta a punta.{" "}
+          Los baches de Calle Justa los reportan los vecinos: son datos actuales y abiertos, en lugar de depender de una
+          base de datos del gobierno que no es pública y puede estar desactualizada. Mientras la plataforma reúne sus
+          primeros reportes reales, funciona con un <strong className="text-ink">escenario simulado</strong>, con semilla
+          fija y supuestos tomados de la literatura, para mostrar cómo funciona el método de punta a punta.{" "}
           <strong className="text-ink">Sus resultados no describen a Navojoa.</strong>
         </p>
         <Tabla cabeceras={["Componente", "Supuesto"]} filas={SUPUESTOS} />

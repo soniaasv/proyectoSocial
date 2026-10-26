@@ -22,7 +22,7 @@ Detectar baches ya está resuelto. Lo que falta es **priorizar con equidad y tra
 | **Panel** | Ayuntamiento | Lista de trabajo priorizada, filtros y exportación a CSV |
 | **Datos** | Todos | Descargas CSV y GeoJSON, API y cómo reproducirlo todo |
 
-> **Datos simulados:** Navojoa todavía no publica datos abiertos de baches. Mientras se obtienen por transparencia y por recorridos de campo, los reportes son un **escenario simulado** documentado en la [metodología](docs/metodologia.md). Las calles, escuelas, población y marginación sí son reales.
+> **Datos simulados:** los baches los reportarán los vecinos en la plataforma. Mientras se reúnen los primeros reportes reales, los reportes son un **escenario simulado** documentado en la [metodología](docs/metodologia.md). Las calles, escuelas, población y marginación sí son reales.
 
 ## Alineación con los ODS
 

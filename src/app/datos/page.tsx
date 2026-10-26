@@ -101,7 +101,7 @@ export default function DatosPage() {
           ))}
         </ul>
         <p className="text-sm text-ink-2">
-          Mientras recibimos los datos oficiales, los reportes incluyen un escenario simulado: cada renglón trae la columna{" "}
+          Hasta que haya suficientes reportes de vecinos, los reportes incluyen un escenario simulado: cada renglón trae la columna{" "}
           <code className="rounded bg-plane px-1">simulado</code> para distinguirlo.
         </p>
       </section>

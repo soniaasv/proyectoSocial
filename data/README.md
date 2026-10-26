@@ -22,7 +22,7 @@ Las fuentes, quién las publica y sus licencias están en [`sources.json`](sourc
 
 ## Sobre los datos simulados
 
-Navojoa todavía no publica datos abiertos de baches. Mientras se obtienen los datos oficiales (por solicitudes de transparencia) y los de recorridos propios, la app usa un escenario **simulado** con semilla fija (`20261024`). Cada registro lleva `simulado: true` y la interfaz lo indica en todo momento.
+Los baches los reportan los vecinos en la plataforma. Mientras se reúnen los primeros reportes reales, la app usa un escenario **simulado** con semilla fija (`20261024`). Cada registro lleva `simulado: true` y la interfaz lo indica en todo momento.
 
 El modelo generativo y sus supuestos están en el docstring de [`simulate_reports.py`](pipeline/simulate_reports.py) y en [`docs/metodologia.md`](../docs/metodologia.md). **Los resultados del escenario simulado no describen a Navojoa**: sirven para probar que el método funciona.
 
