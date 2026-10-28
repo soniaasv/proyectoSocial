@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   description: SITE.descripcion,
   applicationName: SITE.nombre,
-  authors: [{ name: SITE.autora, url: "https://github.com/soniaasv" }],
-  creator: SITE.autora,
+  authors: SITE.equipo.map((name) => ({ name })),
+  creator: SITE.equipo.join(" y "),
   openGraph: {
     type: "website",
     locale: "es_MX",

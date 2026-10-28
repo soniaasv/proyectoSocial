@@ -192,22 +192,18 @@ export default function Home() {
           <h2 id="equipo" className="text-3xl font-semibold tracking-tight">
             Quiénes somos
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-lg border border-line bg-card p-6">
-              <p className="font-semibold">{SITE.autora}</p>
-              <p className="text-sm text-ink-3">Líder del proyecto · Ciencia de datos</p>
-              <p className="mt-3 text-sm text-ink-2">
-                Plantea la pregunta de investigación, diseña el análisis de equidad y coordina el trabajo con vecinos e
-                instituciones.
-              </p>
-            </div>
-            <div className="rounded-lg border border-line bg-card p-6">
-              <p className="font-semibold">Chema</p>
-              <p className="text-sm text-ink-3">Ingeniería de software e IA</p>
-              <p className="mt-3 text-sm text-ink-2">
-                Construye la plataforma, el pipeline de datos y el modelo de detección que corre en el celular.
-              </p>
-            </div>
+          <div className="space-y-6">
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {SITE.equipo.map((nombre) => (
+                <li key={nombre} className="rounded-lg border border-line bg-card px-6 py-5 font-semibold">
+                  {nombre}
+                </li>
+              ))}
+            </ul>
+            <p className="max-w-2xl text-ink-2">
+              Somos dos hermanos de Navojoa construyendo juntos Calle Justa: desde la investigación del problema y el
+              análisis de los datos hasta la plataforma y la inteligencia artificial que corre en el celular.
+            </p>
           </div>
         </div>
       </section>

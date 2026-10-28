@@ -5,7 +5,7 @@ export const SITE = {
     "Calle Justa mide si las calles de Navojoa se reparan donde más se necesita, no solo donde más se queja la gente. Mapa, índice de prioridad explicable y datos abiertos.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://calle-justa.vercel.app",
   repo: "https://github.com/soniaasv/proyectoSocial",
-  autora: "Sonia Arizbeth Soto Valenzuela",
+  equipo: ["Sonia Arizbeth Soto Valenzuela", "Chema"],
   /** The municipality's official WhatsApp channel for citizen reports. */
   whatsappAyuntamiento: "526421571356",
 } as const;
