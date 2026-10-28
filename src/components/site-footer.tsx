@@ -16,6 +16,9 @@ export function SiteFooter() {
             transparenta para que las decisiones sobre nuestras calles sean más justas.
           </p>
           <p className="text-sm text-ink-2">
+            Un proyecto de <span className="font-medium text-ink">{SITE.autora}</span>.
+          </p>
+          <p className="text-sm text-ink-2">
             ¿Viste un bache? Repórtalo también al Ayuntamiento por WhatsApp:{" "}
             <a className="font-medium text-ink underline underline-offset-2" href={`https://wa.me/${SITE.whatsappAyuntamiento}`}>
               642 157 1356

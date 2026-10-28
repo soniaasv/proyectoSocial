@@ -3,7 +3,7 @@ import Link from "next/link";
 import { SEVERIDAD_LABEL } from "@/lib/domain";
 import { FACTOR_LABEL, PESOS, type Factor } from "@/lib/priority";
 import { construirMapaEstatico } from "@/server/mapa-estatico";
-import { CIFRAS } from "@/lib/site";
+import { CIFRAS, SITE } from "@/lib/site";
 
 const PASOS = [
   {
@@ -194,7 +194,7 @@ export default function Home() {
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="rounded-lg border border-line bg-card p-6">
-              <p className="font-semibold">Sonia Soto Valenzuela</p>
+              <p className="font-semibold">{SITE.autora}</p>
               <p className="text-sm text-ink-3">Líder del proyecto · Ciencia de datos</p>
               <p className="mt-3 text-sm text-ink-2">
                 Plantea la pregunta de investigación, diseña el análisis de equidad y coordina el trabajo con vecinos e
