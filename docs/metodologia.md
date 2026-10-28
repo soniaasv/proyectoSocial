@@ -105,7 +105,7 @@ Los baches de la plataforma los reportan los vecinos, lo que da datos actuales y
 | Daño | Baches en calles pavimentadas o de superficie desconocida, proporcionales a la longitud | ~2,460 baches |
 | Daño por tráfico | Más desgaste en vialidades importantes | primaria ×1.6, secundaria ×1.4, terciaria ×1.2 |
 | Daño por zona | Infraestructura más vieja en zonas marginadas | muy bajo ×0.8 … muy alto ×1.5 |
-| Reporte ciudadano | Probabilidad de reportar decreciente con la marginación (Kontokosta et al., 2017) | 55% (muy bajo) … 18% (muy alto) |
+| Reporte ciudadano | Probabilidad de reportar decreciente con la marginación (Kontokosta et al., 2017; Kontokosta y Hong, 2021) | 55% (muy bajo) … 18% (muy alto) |
 | Recorridos | 12% de las calles elegidas al azar; detección del 90% | — |
 | Reparación | Por quejas: tiempo exponencial, más rápido con más quejas y en vialidades importantes | media de 60 días para 1 queja en calle local |
 | Parches | Probabilidad de que un parche falle | 12% |
@@ -126,6 +126,7 @@ Ver la [ficha del modelo](../ml/MODEL_CARD.md). El detector solo ayuda a confirm
 ## 9. Referencias
 
 - Kontokosta, C., Hong, B. y Korsberg, K. (2017). *Equity in 311 Reporting: Understanding Socio-Spatial Differentials in the Propensity to Complain*. arXiv:1710.02452.
+- Kontokosta, C. y Hong, B. (2021). *Bias in smart city governance: How socio-spatial disparities in 311 complaint behavior impact the fairness of data-driven decisions*. Sustainable Cities and Society, 64, 102503.
 - Sjoberg, F. M., Mellon, J. y Peixoto, T. (2017). The Effect of Bureaucratic Responsiveness on Citizen Participation. *Public Administration Review*, 77(3), 340–351.
 - Crawford, K. (2013). The Hidden Biases in Big Data. *Harvard Business Review*.
 - Arya, D. et al. (2022). RDD2022: A multi-national image dataset for automatic Road Damage Detection. arXiv:2209.08538.

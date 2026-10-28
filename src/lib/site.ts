@@ -40,8 +40,8 @@ export const CIFRAS = [
   },
   {
     valor: "83.4%",
-    etiqueta: "de la población urbana de México señala los baches como problema de su ciudad, por encima de la delincuencia",
-    fuente: "INEGI, ENSU 2T-2026",
+    etiqueta: "de las personas de 18 años o más en 91 ciudades de México señalaron los baches como uno de los principales problemas de su ciudad",
+    fuente: "INEGI, ENSU, junio de 2026",
     url: "https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2026/ensu/ENSU2026_07_CP.pdf",
   },
 ] as const;

@@ -98,21 +98,24 @@ export default function Home() {
             </h2>
             <p className="text-ink-2">
               El Ayuntamiento prioriza según las solicitudes ciudadanas y las vialidades más transitadas. Suena razonable,
-              pero la investigación con millones de reportes en otras ciudades muestra que{" "}
-              <strong className="text-ink">no todas las colonias se quejan igual</strong>: donde hay menos internet, menos
-              tiempo o menos confianza en el gobierno, hay menos reportes, aunque haya el mismo o más daño.
+              pero estudios con cientos de miles de reportes en ciudades de Estados Unidos muestran que{" "}
+              <strong className="text-ink">no todos los barrios se quejan igual</strong>: la costumbre de reportar
+              cambia con el nivel socioeconómico y el acceso a internet, y en Kansas City los barrios de menores ingresos
+              reportan menos los problemas de sus calles, aunque los necesitan más.
             </p>
             <p className="text-ink-2">
-              El resultado es que las zonas con más rezago esperan más. Calle Justa existe para medirlo y para proponer
-              una forma más justa de decidir qué se repara primero.
+              Si se repara según las quejas, las zonas con más rezago pueden quedarse esperando más. Calle Justa existe
+              para medir si eso pasa en Navojoa y para proponer una forma más justa de decidir qué se repara primero.
             </p>
           </div>
           <blockquote className="flex flex-col justify-center rounded-lg border border-line bg-card p-6">
             <p className="text-lg text-pretty">
-              “Los barrios que reportan menos reciben menos reparaciones, aunque sus calles estén igual o peor.”
+              “Los barrios de bajos ingresos reportan menos los problemas del estado de sus calles, aunque tienen una
+              necesidad mayor.”
             </p>
             <footer className="mt-4 text-sm text-ink-3">
-              Síntesis de Kontokosta et al. (2017) sobre los sistemas de quejas 311 de Nueva York y Kansas City
+              Kontokosta y Hong (2021), estudio sobre las quejas ciudadanas en Kansas City, Estados Unidos. Sustainable
+              Cities and Society, vol. 64 (traducción propia).
             </footer>
           </blockquote>
         </div>

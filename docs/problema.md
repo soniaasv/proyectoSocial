@@ -2,7 +2,7 @@
 
 ## El problema
 
-Los baches son el **problema urbano #1 en México**: el 83.4% de la población urbana los señala en la ENSU del 2T-2026 (INEGI), por encima de la delincuencia.
+En junio de 2026, el 83.4% de las personas de 18 años o más en las 91 ciudades de la ENSU (INEGI) señalaron los baches en calles y avenidas como uno de los principales problemas de su ciudad; fue el problema más mencionado.
 
 En Navojoa, Sonora:
 
@@ -19,7 +19,7 @@ Detectar baches con inteligencia artificial ya está resuelto. Hay productos com
 
 Lo que **nadie mide de forma independiente** es:
 
-1. **¿Quién espera más?** Priorizar por quejas favorece a quien más se queja. La literatura muestra que la propensión a reportar depende del nivel socioeconómico (Kontokosta et al., 2017; Crawford, 2013).
+1. **¿Quién espera más?** Priorizar por quejas favorece a quien más se queja. La literatura muestra que la propensión a reportar depende del nivel socioeconómico (Kontokosta et al., 2017; Kontokosta y Hong, 2021; Crawford, 2013).
 2. **¿Se repara lo que más importa?** Un bache frente a una escuela o en una ruta de camión no pesa lo mismo que uno en una calle sin salida.
 3. **¿Dura la reparación?** Tapar un bache no es resolver una calle.
 

@@ -8,7 +8,7 @@ Calle Justa mide si las calles de Navojoa se reparan donde más se necesita, y n
 
 ## El problema
 
-Los baches son el problema urbano #1 en México: el 83.4% de la población urbana los señala (INEGI, ENSU 2T-2026). En Navojoa, el Ayuntamiento contó 19,208 baches y tapó más de 10,500 en un año. Prioriza según las solicitudes ciudadanas, pero la investigación muestra que **no todas las zonas se quejan igual**: donde hay más rezago se reporta menos, y por eso se espera más.
+En junio de 2026, el 83.4% de las personas de 18 años o más en 91 ciudades de México señalaron los baches como uno de los principales problemas de su ciudad (INEGI, ENSU). En Navojoa, el Ayuntamiento contó 19,208 baches y tapó más de 10,500 en un año. Prioriza según las solicitudes ciudadanas, pero la investigación muestra que **no todas las zonas se quejan igual**: donde hay más rezago se reporta menos, y por eso se espera más.
 
 Detectar baches ya está resuelto. Lo que falta es **priorizar con equidad y transparentar la atención**. Ver [docs/problema.md](docs/problema.md).
 
